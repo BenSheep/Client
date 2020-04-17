@@ -1,13 +1,14 @@
-import Link from "next/link";
-
-const linkStyle = {
-  marginRight: 15,
-};
+import React from 'react'
+import Link from 'next/link'
 
 const Header = () => (
-  <nav className="flex items-center justify-between flex-wrap shadow-lg p-6">
+  <nav className="flex items-center justify-between flex-wrap shadow-lg p-6 pl-12 pr-12">
     <div className="flex items-center flex-shrink-0 mr-6">
-      <span className="font-semibold text-3xl tracking-tight">Study</span>
+      <Link href="/">
+        <a>
+          <span className="font-semibold text-3xl tracking-tight">Study</span>
+        </a>
+      </Link>
     </div>
     {/* Burger menu */}
     <div className="block lg:hidden">
@@ -25,17 +26,14 @@ const Header = () => (
     {/* Burger menu */}
     <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div className="text-lg lg:flex-grow text-right">
+        <Link href="/about">
+          <a className="block mt-4 lg:inline-block lg:mt-0 mr-12">About</a>
+        </Link>
         <a
           href="#responsive-header"
           className="block mt-4 lg:inline-block lg:mt-0 mr-12"
         >
-          Docs
-        </a>
-        <a
-          href="#responsive-header"
-          className="block mt-4 lg:inline-block lg:mt-0 mr-12"
-        >
-          Examples
+          Pricing
         </a>
         <a
           href="#responsive-header"
@@ -51,6 +49,6 @@ const Header = () => (
       </div>
     </div>
   </nav>
-);
+)
 
-export default Header;
+export default Header
