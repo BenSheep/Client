@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-blue: #0d3b66;
+  --main-white: #f9f8f4;
+}
+
 body {
-  @apply bg-blue-500 p-12;
+  background-color: var(--main-white);
+}
+nav a,
+nav span {
+  color: var(--main-blue);
+}
+
+.cta {
+  @apply inline-block px-4 py-2 leading-none border rounded mt-4;
+  background-color: var(--main-blue);
+  border: 1px solid var(--main-blue);
+  color: var(--main-white);
 }
