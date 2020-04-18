@@ -1,5 +1,5 @@
-describe('smoke test', () => {
-  it('makes sure cypress is fine', () => {
+describe('sign up', () => {
+  it("fails registering a user until it doesn't", () => {
     cy.visit('localhost:3000')
 
     cy.get('[data-test="sign-up-button"]').click()

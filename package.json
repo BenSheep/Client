@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "lint": "eslint components pages",
+    "lint": "eslint components pages store",
     "e2e": "cypress open",
-    "fix": "eslint --fix components pages",
+    "fix": "eslint --fix components pages store",
     "build": "next build",
     "start": "next start"
   },
