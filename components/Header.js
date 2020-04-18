@@ -15,7 +15,7 @@ export default class Header extends Component {
   render() {
     const { showBurgerMenuLinks } = this.state
     return (
-      <nav className="flex items-center justify-between flex-wrap shadow-lg p-6 lg:pl-12 lg:pr-12">
+      <nav className="relative flex items-center justify-between flex-wrap shadow-lg p-6 lg:pl-12 lg:pr-12">
         <div className="flex items-center flex-shrink-0 mr-6">
           <Link href="/">
             <a>
@@ -25,7 +25,7 @@ export default class Header extends Component {
             </a>
           </Link>
         </div>
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <button
             className="flex items-center px-3 py-2 border rounded text-blue border-blue hover:text-blue hover:border-blue"
             onClick={() => {
@@ -43,31 +43,31 @@ export default class Header extends Component {
           </button>
         </div>
         <div
-          className={`links w-full block flex-grow lg:flex lg:items-center lg:w-auto ${
-            showBurgerMenuLinks ? 'hidden' : ''
+          className={`w-full block flex-grow md:flex md:items-center md:w-auto ${
+            showBurgerMenuLinks ? 'hidden' : 'mobile-menu pt-2 pb-4 px-6 left-0'
           }`}
         >
-          <div className="text-lg lg:flex-grow lg:text-right">
+          <div className="text-lg md:flex-grow md:text-right">
             <Link href="/about">
-              <a className="block mt-4 lg:inline-block lg:mt-0 mr-12 text-blue">
+              <a className="block mt-4 md:inline-block md:mt-0 mr-12 text-blue">
                 About
               </a>
             </Link>
             <a
               href=""
-              className="block mt-4 lg:inline-block lg:mt-0 mr-12 text-blue"
+              className="block mt-4 md:inline-block md:mt-0 mr-12 text-blue"
             >
               Pricing
             </a>
             <a
               href=""
-              className="block mt-4 lg:inline-block lg:mt-0 mr-12 text-blue"
+              className="block mt-4 md:inline-block md:mt-0 mr-12 text-blue"
             >
               Blog
             </a>
           </div>
           <div>
-            <a href="#" className="text-lg lg:mt-0 cta uppercase">
+            <a href="#" className="text-lg md:mt-0 cta uppercase">
               Sign up
             </a>
           </div>
