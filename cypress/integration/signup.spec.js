@@ -52,6 +52,4 @@ const signUp = () => {
     .type('safepassword123')
 
   cy.get('[data-test="submit"]').click()
-
-  cy.get('[data-test="error-message"]').should('not.be.visible')
 }
