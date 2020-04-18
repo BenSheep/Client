@@ -7,5 +7,13 @@ describe('smoke test', () => {
     cy.get('[data-test="email-input"]')
       .focus()
       .type('test@email.com')
+
+    cy.get('[data-test="password-input"]')
+      .focus()
+      .type('safepassword123')
+
+    cy.get('[data-test="submit"]').click()
+
+    // cy.get('[data-test="email-input"]').should('not.be.visible')
   })
 })
