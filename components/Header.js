@@ -67,7 +67,11 @@ export default class Header extends Component {
             </a>
           </div>
           <div>
-            <a href="#" className="text-lg md:mt-0 cta uppercase">
+            <a
+              href="#"
+              className="text-lg md:mt-0 cta uppercase"
+              data-test="sign-up-button"
+            >
               Sign up
             </a>
           </div>
