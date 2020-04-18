@@ -96,7 +96,7 @@ class SignUpForm extends React.Component {
               </h3>
               <div className="w-full my-8">
                 <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
                   type="email"
                   name="email"
                   placeholder="Email address"
@@ -114,7 +114,7 @@ class SignUpForm extends React.Component {
               </div>
               <div className="w-full mb-4">
                 <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
                   type="password"
                   name="password"
                   placeholder="Password"

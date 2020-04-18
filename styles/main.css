@@ -4,7 +4,7 @@
 
 :root {
   --main-blue: #0d3b66;
-  --main-white: #fff;
+  --main-cream: #f9f8f4;
   --main-red: #f1554c;
   --main-yellow: #f4d35e;
   --main-orange: #ee964b;
@@ -18,14 +18,18 @@ nav {
   @apply inline-block px-4 py-2 leading-none border rounded mt-4;
   background-color: var(--main-blue);
   border: 1px solid var(--main-blue);
-  color: var(--main-white);
+  color: #fff;
 }
 
 .cta-lg {
   @apply inline-block py-4 leading-none border rounded-lg;
-  background-color: var(--main-blue);
-  border: 1px solid var(--main-blue);
-  color: var(--main-white);
+  background: linear-gradient(
+    to bottom right,
+    var(--main-blue) 0%,
+    var(--main-red) 85%,
+    var(--main-orange) 100%
+  );
+  color: #fff;
 }
 
 #landing h1 {

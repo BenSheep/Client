@@ -86,7 +86,7 @@ class LogInForm extends React.Component {
               <h3 className="text-lg md:text-xl text-gray">Welcome back</h3>
               <div className="w-full my-8">
                 <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue text-darkgray outline-none pl-4 text-xl"
                   type="text"
                   name="emailOrUsername"
                   placeholder="Email or username"
@@ -104,7 +104,7 @@ class LogInForm extends React.Component {
               </div>
               <div className="w-full mb-4">
                 <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue text-darkgray outline-none pl-4 text-xl"
                   type="password"
                   name="password"
                   placeholder="Password"
