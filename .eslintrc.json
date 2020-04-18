@@ -5,11 +5,12 @@
     "es6": true,
     "commonjs": true
   },
-  "plugins": ["react", "prettier"],
+  "plugins": ["react", "prettier", "cypress"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
   ],
   "settings": {
     "react": {

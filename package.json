@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "lint": "eslint components pages",
-    "fix": "eslint --fix components pages",
+    "lint": "eslint components pages store",
+    "e2e": "cypress open",
+    "fix": "eslint --fix components pages store",
     "build": "next build",
     "start": "next start"
   },
@@ -14,20 +15,28 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
+    "formik": "^2.1.4",
     "next": "^9.3.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.2.0",
     "babel-eslint": "^10.0.3",
+    "cypress": "^4.4.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-loader": "^3.0.2",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "1.18.2",
+    "tailwindcss": "^1.2.0",
     "webpack": "^4.41.1"
   }
 }
