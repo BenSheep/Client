@@ -22,7 +22,7 @@ nav {
 }
 
 .cta-lg {
-  @apply inline-block py-6 leading-none border rounded-lg;
+  @apply inline-block py-4 leading-none border rounded-lg;
   background-color: var(--main-blue);
   border: 1px solid var(--main-blue);
   color: var(--main-white);

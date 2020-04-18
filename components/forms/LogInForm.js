@@ -79,12 +79,14 @@ class LogInForm extends React.Component {
           onSubmit={this.handleOnSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="pt-8">
-              <h1 className="text-6xl text-blue font-semibold">Log in</h1>
-              <h3 className="text-xl text-gray">Welcome back</h3>
+            <Form className="md:pt-8">
+              <h1 className="text-3xl md:text-6xl lg:text-6xl text-blue font-semibold">
+                Log in
+              </h1>
+              <h3 className="text-lg md:text-xl text-gray">Welcome back</h3>
               <div className="w-full my-8">
                 <Field
-                  className="w-4/5 rounded-lg py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
                   type="text"
                   name="emailOrUsername"
                   placeholder="Email or username"
@@ -102,7 +104,7 @@ class LogInForm extends React.Component {
               </div>
               <div className="w-full mb-4">
                 <Field
-                  className="w-4/5 rounded-lg py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver pl-4 text-xl"
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -116,7 +118,7 @@ class LogInForm extends React.Component {
                 />
               </div>
               <button
-                className="mt-12 w-4/5 cta-lg text-xl uppercase"
+                className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
                 data-test="submit"
                 type="submit"
                 disabled={isSubmitting}
