@@ -17,7 +17,11 @@ class SignUpForm extends React.Component {
       errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = 'Invalid email address'
+    } else if (values.password.length < 8 || !/\d/.test(values.password)) {
+      errors.password =
+        'Password must have at least 8 characters and contain a number'
     }
+
     return errors
   }
 
