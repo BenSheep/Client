@@ -4,9 +4,12 @@ export default class Error extends React.Component {
   render() {
     const { error } = this.props
     return (
-      <h1 className="text-left pl-16 text-red" data-test="error-message">
+      <div
+        className="w-4/5 mx-auto pl-1 text-left text-red"
+        data-test="error-message"
+      >
         {error.message}
-      </h1>
+      </div>
     )
   }
 }
