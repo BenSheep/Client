@@ -16,7 +16,7 @@ jobs:
             - v1-deps
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: npm install
       - save_cache:
           key: v1-deps-{{ .Branch }}-Possible EventEmitter memory leak detected. 11 bundled listeners added.{{ checksum "package.json" }}
           paths:
