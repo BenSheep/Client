@@ -17,6 +17,7 @@ describe('sign up', () => {
 const tryBadPassword = () => {
   cy.get('[data-test="email-input"]')
     .focus()
+    .clear()
     .type('cypress@email.com')
 
   cy.get('[data-test="password-input"]')
@@ -31,6 +32,7 @@ const tryBadPassword = () => {
 const tryTakenEmail = () => {
   cy.get('[data-test="email-input"]')
     .focus()
+    .clear()
     .type('user@email.com')
 
   cy.get('[data-test="password-input"]')
@@ -45,6 +47,7 @@ const tryTakenEmail = () => {
 const signUp = () => {
   cy.get('[data-test="email-input"]')
     .focus()
+    .clear()
     .type('cypress@email.com')
 
   cy.get('[data-test="password-input"]')

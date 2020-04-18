@@ -49,7 +49,6 @@ class SignUpForm extends React.Component {
       .then(res => {
         if (res.data.errors) {
           this.setState({ error: res.data.errors[0], isEmailError: true })
-          resetForm()
           return
         }
         this.setState({ error: null })
@@ -57,9 +56,12 @@ class SignUpForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error })
-        resetForm()
       })
-      .then(setSubmitting(false))
+      .then(() => {
+        console.log('asd')
+        resetForm()
+        setSubmitting(false)
+      })
   }
 
   logIn = (email, password) => {
@@ -101,6 +103,7 @@ class SignUpForm extends React.Component {
                   name="email"
                   component="div"
                   className="w-4/5 mx-auto text-left text-red pl-1"
+                  data-test="error-message"
                 />
                 {/* Shows up is there is an error response from the API and not from form vaildation from Formik */}
                 {error && <Error error={error} />}
@@ -117,6 +120,7 @@ class SignUpForm extends React.Component {
                   name="password"
                   component="div"
                   className="w-4/5 text-left text-red pl-16 pl-1"
+                  data-test="error-message"
                 />
               </div>
               <button
