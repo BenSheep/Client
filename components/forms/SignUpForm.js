@@ -1,17 +1,52 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import api from '../../store/api'
 
 import Error from './Error'
 
-import { signUp } from '../../store/actions/usersActions'
+import { storeToken } from '../../store/actions/userActions'
 
 class SignUpForm extends React.Component {
+  state = { error: null }
   handleOnSubmit = (values, { setSubmitting }) => {
+    setSubmitting(true)
+
     const { email, password } = values
-    setSubmitting(false)
-    this.props.signUp(email, password)
+    const query = `mutation {
+      register(email: "${email}", password: "${password}") {
+        email
+      }
+    }`
+    api
+      .post('', { query })
+      .then(res => {
+        if (res.data.errors) {
+          this.setState({ error: res.data.errors[0] })
+          return
+        }
+
+        this.setState({ error: null })
+        this.logIn(email, password)
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+      .then(setSubmitting(false))
   }
+
+  logIn = (email, password) => {
+    const query = `mutation {
+      login(email: "${email}", password: "${password}") {
+        token
+      }
+    }`
+    api.post('', { query }).then(res => {
+      const { token } = res.data.data.login
+      this.props.storeToken(token)
+    })
+  }
+
   validate = values => {
     const errors = {}
     if (!values.email) {
@@ -23,10 +58,9 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-    const { users } = this.props
-    const { error } = users
+    const { error } = this.state
     return (
-      <div>
+      <div className="p-12">
         <Formik
           initialValues={{ email: '', password: '' }}
           validate={this.validate}
@@ -34,15 +68,26 @@ class SignUpForm extends React.Component {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="email" name="email" data-test="email-input" />
+              <Field
+                className="border-2 border-solid border-blue mr-6 py-2"
+                type="email"
+                name="email"
+                data-test="email-input"
+              />
               <ErrorMessage name="email" component="div" />
               <Field
+                className="border-2 border-solid border-blue mr-6 py-2"
                 type="password"
                 name="password"
                 data-test="password-input"
               />
               <ErrorMessage name="password" component="div" />
-              <button data-test="submit" type="submit" disabled={isSubmitting}>
+              <button
+                className="cta"
+                data-test="submit"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 Submit
               </button>
             </Form>
@@ -56,12 +101,12 @@ class SignUpForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    users: state.users,
+    user: state.user,
   }
 }
 
 const mapDispatchToProps = {
-  signUp,
+  storeToken,
 }
 
 export default connect(
