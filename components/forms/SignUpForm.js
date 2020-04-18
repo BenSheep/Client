@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Router from 'next/router'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import api from '../../store/api'
 
@@ -9,10 +10,27 @@ import { storeToken } from '../../store/actions/userActions'
 
 class SignUpForm extends React.Component {
   state = { error: null }
-  handleOnSubmit = (values, { setSubmitting }) => {
+
+  validate = values => {
+    const errors = {}
+    if (!values.email) {
+      errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = 'Invalid email address'
+    }
+    return errors
+  }
+
+  handleOnSubmit = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true)
 
     const { email, password } = values
+    if (email && password) {
+      this.signUp(email, password, setSubmitting, resetForm)
+    }
+  }
+
+  signUp(email, password, setSubmitting, resetForm) {
     const query = `mutation {
       register(email: "${email}", password: "${password}") {
         email
@@ -23,6 +41,7 @@ class SignUpForm extends React.Component {
       .then(res => {
         if (res.data.errors) {
           this.setState({ error: res.data.errors[0] })
+          resetForm()
           return
         }
 
@@ -31,6 +50,7 @@ class SignUpForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error })
+        resetForm()
       })
       .then(setSubmitting(false))
   }
@@ -44,17 +64,8 @@ class SignUpForm extends React.Component {
     api.post('', { query }).then(res => {
       const { token } = res.data.data.login
       this.props.storeToken(token)
+      Router.push('/app')
     })
-  }
-
-  validate = values => {
-    const errors = {}
-    if (!values.email) {
-      errors.email = 'Required'
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = 'Invalid email address'
-    }
-    return errors
   }
 
   render() {
