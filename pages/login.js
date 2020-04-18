@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import SignUpForm from '../components/forms/SignUpForm'
+import LogInForm from '../components/forms/LogInForm'
 
 export default class SignUp extends React.Component {
   render() {
@@ -8,12 +8,12 @@ export default class SignUp extends React.Component {
       <div className="w-full h-screen flex flex-col mx-auto text-center bg-cream">
         <h1 className="text-blue text-4xl mt-2 mb-12">Study</h1>
         <div className="mx-auto w-4/5 md:w-2/5  justify-center items-center mt-12 shadow-2xl bg-white">
-          <SignUpForm className="" />
+          <LogInForm className="" />
           <h5 className="justify-center items-center mt-3 pb-8 text-gray text-lg">
-            Already have an account?{' '}
+            Don't have an account?{' '}
             <Link href="/login">
-              <a className="text-blue" data-test="go-to-log-in">
-                Log in
+              <a className="text-blue" data-test="go-to-sign-up">
+                Sign up
               </a>
             </Link>
           </h5>

@@ -1,3 +1,10 @@
+import {
+  USER_EMAIL,
+  USER_PASSWORD,
+  BAD_EMAIL,
+  BAD_PASSWROD,
+  TAKEN_EMAIL,
+} from '../messages'
 describe('sign up', () => {
   it("fails registering a user until it doesn't", () => {
     cy.visit('localhost:3000')
@@ -18,11 +25,12 @@ const tryBadPassword = () => {
   cy.get('[data-test="email-input"]')
     .focus()
     .clear()
-    .type('cypress@email.com')
+    .type(USER_EMAIL)
 
   cy.get('[data-test="password-input"]')
     .focus()
-    .type('123')
+    .clear()
+    .type(BAD_PASSWROD)
 
   cy.get('[data-test="submit"]').click()
 
@@ -33,11 +41,12 @@ const tryTakenEmail = () => {
   cy.get('[data-test="email-input"]')
     .focus()
     .clear()
-    .type('user@email.com')
+    .type(TAKEN_EMAIL)
 
   cy.get('[data-test="password-input"]')
     .focus()
-    .type('safepassword123')
+    .clear()
+    .type(USER_PASSWORD)
 
   cy.get('[data-test="submit"]').click()
 
@@ -48,11 +57,12 @@ const signUp = () => {
   cy.get('[data-test="email-input"]')
     .focus()
     .clear()
-    .type('cypress@email.com')
+    .type(USER_EMAIL)
 
   cy.get('[data-test="password-input"]')
     .focus()
-    .type('safepassword123')
+    .clear()
+    .type(USER_PASSWORD)
 
   cy.get('[data-test="submit"]').click()
 }
