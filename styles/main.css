@@ -4,15 +4,14 @@
 
 :root {
   --main-blue: #0d3b66;
-  --main-white: #f9f8f4;
+  --main-white: #fff;
+  --main-red: #f1554c;
+  --main-yellow: #f4d35e;
+  --main-orange: #ee964b;
 }
 
 body {
   background-color: var(--main-white);
-}
-nav a,
-nav span {
-  color: var(--main-blue);
 }
 
 .cta {
@@ -20,4 +19,23 @@ nav span {
   background-color: var(--main-blue);
   border: 1px solid var(--main-blue);
   color: var(--main-white);
+}
+
+#landing h1 {
+  font-size: 6rem;
+  background: linear-gradient(to right,
+      var(--main-blue) 0%,
+      var(--main-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (max-width: 500px) {
+  nav {
+    display: none;
+  }
+
+  #landing h1 {
+    font-size: 8rem;
+  }
 }
