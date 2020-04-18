@@ -1,17 +1,8 @@
 import api from '../api'
 
 export const SIGN_UP = 'SIGN_UP'
-
-export const loadUsers = () => dispatch => {
-  return api.get('/users').then(res => {
-    const users = res.data
-
-    dispatch({
-      type: STORE_USERS,
-      users,
-    })
-  })
-}
+export const LOG_IN = 'LOG_IN'
+export const ERROR = 'ERROR'
 
 export const signUp = (email, password) => dispatch => {
   const query = `mutation {
@@ -21,6 +12,9 @@ export const signUp = (email, password) => dispatch => {
   }`
 
   api.post('', { query }).then(res => {
-    console.log(res.data)
+    if (res.data.errors.length) {
+      const error = res.data.errors[0]
+      dispatch({ type: ERROR, error })
+    }
   })
 }

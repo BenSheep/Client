@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
+import Error from './Error'
+
 import { signUp } from '../../store/actions/usersActions'
 
 class SignUpForm extends React.Component {
@@ -21,24 +23,33 @@ class SignUpForm extends React.Component {
   }
 
   render() {
+    const { users } = this.props
+    const { error } = users
     return (
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={this.validate}
-        onSubmit={this.handleOnSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="email" name="email" data-test="email-input" />
-            <ErrorMessage name="email" component="div" />
-            <Field type="password" name="password" data-test="password-input" />
-            <ErrorMessage name="password" component="div" />
-            <button data-test="submit" type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
+      <div>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validate={this.validate}
+          onSubmit={this.handleOnSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <Field type="email" name="email" data-test="email-input" />
+              <ErrorMessage name="email" component="div" />
+              <Field
+                type="password"
+                name="password"
+                data-test="password-input"
+              />
+              <ErrorMessage name="password" component="div" />
+              <button data-test="submit" type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+        {error && <Error error={error} />}
+      </div>
     )
   }
 }
