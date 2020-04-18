@@ -10,16 +10,19 @@
   --main-orange: #ee964b;
 }
 
-body {
-  background-color: var(--main-white);
-}
-
 nav {
   min-height: 5em;
 }
 
 .cta {
   @apply inline-block px-4 py-2 leading-none border rounded mt-4;
+  background-color: var(--main-blue);
+  border: 1px solid var(--main-blue);
+  color: var(--main-white);
+}
+
+.cta-lg {
+  @apply inline-block py-6 leading-none border rounded-lg;
   background-color: var(--main-blue);
   border: 1px solid var(--main-blue);
   color: var(--main-white);

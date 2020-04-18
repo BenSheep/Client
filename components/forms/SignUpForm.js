@@ -71,30 +71,46 @@ class SignUpForm extends React.Component {
   render() {
     const { error } = this.state
     return (
-      <div className="p-12">
+      <div>
         <Formik
           initialValues={{ email: '', password: '' }}
           validate={this.validate}
           onSubmit={this.handleOnSubmit}
         >
           {({ isSubmitting }) => (
-            <Form>
-              <Field
-                className="border-2 border-solid border-blue mr-6 py-2"
-                type="email"
-                name="email"
-                data-test="email-input"
-              />
-              <ErrorMessage name="email" component="div" />
-              <Field
-                className="border-2 border-solid border-blue mr-6 py-2"
-                type="password"
-                name="password"
-                data-test="password-input"
-              />
-              <ErrorMessage name="password" component="div" />
+            <Form className="pt-8">
+              <h1 className="text-6xl text-blue font-semibold">Sign up</h1>
+              <h3 className="text-xl text-gray">It's completely free</h3>
+              <div className="w-full my-8">
+                <Field
+                  className="w-4/5 rounded-lg py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  type="email"
+                  name="email"
+                  placeholder="Email address"
+                  data-test="email-input"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-left text-red pl-16"
+                />
+              </div>
+              <div className="w-full mb-4">
+                <Field
+                  className="w-4/5 rounded-lg py-6 border-2 border-solid border-silver pl-4 text-xl"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  data-test="password-input"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-left text-red pl-16"
+                />
+              </div>
               <button
-                className="cta"
+                className="mt-12 w-4/5 cta-lg text-xl uppercase"
                 data-test="submit"
                 type="submit"
                 disabled={isSubmitting}
