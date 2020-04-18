@@ -1,5 +1,16 @@
 import React from 'react'
-import DefaultLayout from '../components/DefaultLayout'
+import Header from '../components/Header'
+import Landing from '../components/Landing'
+
 export default function Index() {
-  return <DefaultLayout></DefaultLayout>
+  return (
+    <div>
+      <div>
+        <Header />
+      </div>
+      <div>
+        <Landing />
+      </div>
+    </div>
+  )
 }
