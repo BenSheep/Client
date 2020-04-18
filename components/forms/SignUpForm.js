@@ -9,7 +9,7 @@ import Error from './Error'
 import { storeToken } from '../../store/actions/userActions'
 
 class SignUpForm extends React.Component {
-  state = { error: null }
+  state = { error: null, isEmailError: false }
 
   validate = values => {
     const errors = {}
@@ -44,11 +44,10 @@ class SignUpForm extends React.Component {
       .post('', { query })
       .then(res => {
         if (res.data.errors) {
-          this.setState({ error: res.data.errors[0] })
+          this.setState({ error: res.data.errors[0], isEmailError: true })
           resetForm()
           return
         }
-
         this.setState({ error: null })
         this.logIn(email, password)
       })
@@ -73,7 +72,7 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-    const { error } = this.state
+    const { error, isEmailError } = this.state
     return (
       <div>
         <Formik
@@ -98,6 +97,8 @@ class SignUpForm extends React.Component {
                   component="div"
                   className="text-left text-red pl-16"
                 />
+                {/* Shows up is there is an error response from the API and not from form vaildation from Formik */}
+                {error && isEmailError && <Error error={error} />}
               </div>
               <div className="w-full mb-4">
                 <Field
@@ -124,7 +125,6 @@ class SignUpForm extends React.Component {
             </Form>
           )}
         </Formik>
-        {error && <Error error={error} />}
       </div>
     )
   }
