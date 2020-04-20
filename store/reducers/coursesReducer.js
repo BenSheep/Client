@@ -6,7 +6,6 @@ export default function coursesReducer(state = initialState, action) {
     case STORE_COURSES: {
       const { courses } = action
 
-      console.log(courses)
       return courses
     }
     default:

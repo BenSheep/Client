@@ -12,19 +12,22 @@ const query = `query{
 }`
 
 export const getCourses = token => dispatch => {
-  const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-  return api.post('', { query }, options).then(res => {
-    if (!res.data.errors) {
-      const courses = res.data.data.myCourses
-
-      dispatch({
-        type: STORE_COURSES,
-        courses,
-      })
+  if (token) {
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  })
+    return api.post('', { query }, options).then(res => {
+      if (!res.data.errors) {
+        const courses = res.data.data.myCourses
+
+        dispatch({
+          type: STORE_COURSES,
+          courses,
+        })
+      }
+    })
+  }
+  throw new Error('No token provided')
 }

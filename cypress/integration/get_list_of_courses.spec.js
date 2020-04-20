@@ -1,6 +1,10 @@
+import { logInWithEmailAndPassword } from '../functions'
+
 describe('User application index page', () => {
   it('displays a list of user courses', () => {
-    cy.visit('http://localhost:3000/app')
+    cy.visit('http://localhost:3000/login')
+
+    logInWithEmailAndPassword()
 
     cy.get('[data-test="navbar"]')
 
@@ -9,7 +13,7 @@ describe('User application index page', () => {
     cy.get('[data-test="courses-header"]').contains('My courses')
 
     cy.get('[data-test="courses-list"]')
-    // .children()
-    // .should('have.length', 2)
+      .children()
+      .should('have.length', 2)
   })
 })

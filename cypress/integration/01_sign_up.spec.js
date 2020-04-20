@@ -1,7 +1,7 @@
 import {
   USER_EMAIL,
   USER_PASSWORD,
-  BAD_PASSWROD,
+  BAD_PASSWORD,
   TAKEN_EMAIL,
 } from '../messages'
 describe('sign up', () => {
@@ -29,7 +29,7 @@ const tryBadPassword = () => {
   cy.get('[data-test="password-input"]')
     .focus()
     .clear()
-    .type(BAD_PASSWROD)
+    .type(BAD_PASSWORD)
 
   cy.get('[data-test="submit"]').click()
 
