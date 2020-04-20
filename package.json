@@ -7,6 +7,7 @@
     "dev": "next",
     "lint": "eslint components pages store",
     "e2e": "cypress open",
+    "test": "jest tests",
     "fix": "eslint --fix components pages store",
     "build": "next build",
     "start": "next start"
@@ -16,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
     "formik": "^2.1.4",
     "next": "^9.3.5",
     "react": "^16.13.1",
@@ -26,17 +28,38 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-react": "^7.9.4",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^25.2.1",
+    "babel-polyfill": "^6.26.0",
+    "identity-obj-proxy": "^3.0.0",
     "cypress": "^4.4.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.19.0",
+    "jest": "^25.4.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "1.18.2",
     "tailwindcss": "^1.2.0",
     "webpack": "^4.41.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss|less)$": "identity-obj-proxy"
+    }
   }
 }
