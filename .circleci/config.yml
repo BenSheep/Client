@@ -22,7 +22,8 @@ jobs:
           paths:
             - ~/.cache ## cache both yarn and Cypress!
       # Run lint
-      - run: yarn lint
+      - run: npm run lint
+      - run: npm run test
       # Install wait on to run the server
       - run: npm install -g wait-on
       # Run script filr that starts and waits for server and then runs e2e

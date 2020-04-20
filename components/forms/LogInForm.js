@@ -1,22 +1,19 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import Router from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import api from '../../store/api'
 
 import Error from './Error'
 
-import { storeToken } from '../../store/actions/userActions'
-
-class LogInForm extends React.Component {
+export default class LogInForm extends React.Component {
   state = { error: null }
 
   validate = values => {
     const errors = {}
     if (!values.emailOrUsername) {
       errors.emailOrUsername = 'Required'
-    } else if (values.password.length < 8 || !/\d/.test(values.password)) {
+    }
+
+    if (values.password.length < 8 || !/\d/.test(values.password)) {
       errors.password =
         'Password must have at least 8 characters and contain a number'
     }
@@ -24,54 +21,24 @@ class LogInForm extends React.Component {
     return errors
   }
 
-  handleOnSubmit = (values, { setSubmitting, resetForm }) => {
+  handleOnSubmit = (values, { setSubmitting }) => {
     setSubmitting(true)
 
     const { emailOrUsername, password } = values
 
-    if (emailOrUsername && password) {
-      this.logIn(emailOrUsername, password, resetForm)
-    }
+    const { onLogIn } = this.props
+
+    onLogIn(emailOrUsername, password, setSubmitting)
   }
 
   handleOnFocus = () => {
-    this.setState({ error: null })
-  }
+    const { onClearErrors } = this.props
 
-  logIn = (emailOrUsername, password, resetForm) => {
-    let query
-    if (emailOrUsername.indexOf('@') !== -1) {
-      query = `mutation {
-            login(email: "${emailOrUsername}", password: "${password}") {
-              token
-            }
-          }`
-    } else {
-      query = `mutation {
-            login(username: "${emailOrUsername}", password: "${password}") {
-              token
-            }
-          }`
-    }
-    api
-      .post('', { query })
-      .then(res => {
-        if (res.data.errors) {
-          this.setState({ error: res.data.errors[0] })
-          resetForm()
-          return
-        }
-        const { token } = res.data.data.login
-        this.props.storeToken(token)
-        Router.push('/app')
-      })
-      .catch(() => {
-        this.setState({ error: { message: 'something went terribly wrong' } })
-      })
+    onClearErrors()
   }
 
   render() {
-    const { error } = this.state
+    const { error } = this.props
     return (
       <div>
         <Formik
@@ -141,18 +108,3 @@ class LogInForm extends React.Component {
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  }
-}
-
-const mapDispatchToProps = {
-  storeToken,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LogInForm)

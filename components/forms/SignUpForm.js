@@ -1,17 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import Router from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import api from '../../store/api'
 
 import Error from './Error'
 
-import { storeToken } from '../../store/actions/userActions'
-
-class SignUpForm extends React.Component {
-  state = { error: null }
-
+export default class SignUpForm extends React.Component {
   validate = values => {
     const errors = {}
     if (!values.email) {
@@ -28,60 +21,22 @@ class SignUpForm extends React.Component {
     return errors
   }
 
-  handleOnSubmit = (values, { setSubmitting, resetForm }) => {
+  handleOnSubmit = (values, { setSubmitting }) => {
     setSubmitting(true)
 
     const { email, password } = values
-    if (email && password) {
-      this.signUp(email, password, setSubmitting, resetForm)
-    }
+    const { onSignUp } = this.props
+
+    onSignUp(email, password, setSubmitting)
   }
 
   handleOnFocus = () => {
-    this.setState({ error: null })
-  }
-
-  signUp(email, password, setSubmitting, resetForm) {
-    const query = `mutation {
-      register(email: "${email}", password: "${password}") {
-        email
-      }
-    }`
-    api
-      .post('', { query })
-      .then(res => {
-        if (res.data.errors) {
-          this.setState({ error: res.data.errors[0], isEmailError: true })
-          return
-        }
-        this.setState({ error: null })
-        this.logIn(email, password)
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-      .then(() => {
-        console.log('asd')
-        resetForm()
-        setSubmitting(false)
-      })
-  }
-
-  logIn = (email, password) => {
-    const query = `mutation {
-      login(email: "${email}", password: "${password}") {
-        token
-      }
-    }`
-    api.post('', { query }).then(res => {
-      const { token } = res.data.data.login
-      this.props.storeToken(token)
-      Router.push('/app')
-    })
+    const { onClearErrors } = this.props
+    onClearErrors()
   }
 
   render() {
-    const { error } = this.state
+    const { error } = this.props
     return (
       <div>
         <Formik
@@ -153,18 +108,3 @@ class SignUpForm extends React.Component {
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  }
-}
-
-const mapDispatchToProps = {
-  storeToken,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUpForm)
