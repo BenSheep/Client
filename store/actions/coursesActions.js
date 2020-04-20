@@ -20,7 +20,6 @@ export const getCourses = token => dispatch => {
   return api.post('', { query }, options).then(res => {
     if (!res.data.errors) {
       const courses = res.data.data.myCourses
-      console.log(courses)
 
       dispatch({
         type: STORE_COURSES,
