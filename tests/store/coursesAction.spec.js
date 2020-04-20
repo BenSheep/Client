@@ -31,7 +31,7 @@ describe('Courses actions', () => {
         },
       })
 
-      return getCourses()(dispatch).then(() => {
+      return getCourses('token')(dispatch).then(() => {
         expect(dispatch).toHaveBeenCalledWith({
           type: STORE_COURSES,
           courses,
