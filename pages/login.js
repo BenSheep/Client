@@ -9,7 +9,15 @@ import api from '../store/api'
 import { storeToken } from '../store/actions/userActions'
 
 class LogIn extends React.Component {
-  logIn = (emailOrUsername, password) => {
+  constructor(props) {
+    super(props)
+
+    this.state = { error: null }
+
+    this.logIn = this.logIn.bind(this)
+  }
+
+  logIn = (emailOrUsername, password, setSubmitting) => {
     let query
     if (emailOrUsername.indexOf('@') !== -1) {
       query = `mutation {
@@ -38,11 +46,20 @@ class LogIn extends React.Component {
       .catch(() => {
         this.setState({ error: { message: 'something went terribly wrong' } })
       })
+      .then(setSubmitting(false))
+  }
+
+  clearErrors = () => {
+    this.setState({ error: null })
   }
   render() {
     return (
       <RegisterLayout>
-        <LogInForm onLogIn={this.logIn} />
+        <LogInForm
+          onLogIn={this.logIn}
+          error={this.state.error}
+          onClearErrors={this.clearErrors}
+        />
       </RegisterLayout>
     )
   }

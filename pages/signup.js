@@ -9,7 +9,14 @@ import api from '../store/api'
 import { storeToken } from '../store/actions/userActions'
 
 class SignUp extends React.Component {
-  signUp(email, password) {
+  constructor(props) {
+    super(props)
+
+    this.state = { error: null }
+    this.signUp = this.signUp.bind(this)
+  }
+
+  signUp(email, password, setSubmitting) {
     const query = `mutation {
         register(email: "${email}", password: "${password}") {
           email
@@ -28,6 +35,7 @@ class SignUp extends React.Component {
       .catch(error => {
         this.setState({ error })
       })
+      .then(setSubmitting(false))
   }
 
   logIn = (email, password) => {
@@ -43,10 +51,18 @@ class SignUp extends React.Component {
     })
   }
 
+  clearErrors = () => {
+    this.setState({ error: null })
+  }
+
   render() {
     return (
       <RegisterLayout>
-        <SignUpForm onSignUp={this.signUp} />
+        <SignUpForm
+          onSignUp={this.signUp}
+          error={this.state.error}
+          onClearErrors={this.clearErrors}
+        />
       </RegisterLayout>
     )
   }

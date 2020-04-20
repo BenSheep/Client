@@ -28,15 +28,17 @@ export default class LogInForm extends React.Component {
 
     const { onLogIn } = this.props
 
-    onLogIn(emailOrUsername, password)
+    onLogIn(emailOrUsername, password, setSubmitting)
   }
 
   handleOnFocus = () => {
-    this.setState({ error: null })
+    const { onClearErrors } = this.props
+
+    onClearErrors()
   }
 
   render() {
-    const { error } = this.state
+    const { error } = this.props
     return (
       <div>
         <Formik

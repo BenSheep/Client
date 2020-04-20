@@ -47,7 +47,11 @@ describe('Sign up form', () => {
 
     wrapper.find('[data-test="submit"]').simulate('click')
 
-    expect(signUpHandler).toHaveBeenCalledWith(USER_EMAIL, USER_PASSWORD)
+    expect(signUpHandler).toHaveBeenCalledWith(
+      USER_EMAIL,
+      USER_PASSWORD,
+      expect.any(Function)
+    )
   })
 
   it('does not fire sign up if inputs are empty', () => {

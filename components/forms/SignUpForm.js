@@ -5,8 +5,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import Error from './Error'
 
 export default class SignUpForm extends React.Component {
-  state = { error: null }
-
   validate = values => {
     const errors = {}
     if (!values.email) {
@@ -29,15 +27,16 @@ export default class SignUpForm extends React.Component {
     const { email, password } = values
     const { onSignUp } = this.props
 
-    onSignUp(email, password)
+    onSignUp(email, password, setSubmitting)
   }
 
   handleOnFocus = () => {
-    this.setState({ error: null })
+    const { onClearErrors } = this.props
+    onClearErrors()
   }
 
   render() {
-    const { error } = this.state
+    const { error } = this.props
     return (
       <div>
         <Formik
