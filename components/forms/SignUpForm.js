@@ -52,39 +52,8 @@ export default class SignUpForm extends React.Component {
               <h3 className="text-lg md:text-xl text-gray">
                 It's completely free
               </h3>
-              <div className="w-full my-8">
-                <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
-                  type="email"
-                  name="email"
-                  placeholder="Email address"
-                  data-test="email-input"
-                  onFocus={this.handleOnFocus}
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="w-4/5 mx-auto text-left text-red pl-1"
-                  data-test="error-message"
-                />
-                {/* Shows up is there is an error response from the API and not from form vaildation from Formik */}
-                {error && <Error error={error} />}
-              </div>
-              <div className="w-full mb-4">
-                <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  data-test="password-input"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="w-4/5 mx-auto text-left text-red pl-1"
-                  data-test="error-message"
-                />
-              </div>
+              <EmailField error={error} onFocusInput={this.handleOnFocus} />
+              <PasswordField />
               <button
                 className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
                 data-test="submit"
@@ -96,15 +65,58 @@ export default class SignUpForm extends React.Component {
             </Form>
           )}
         </Formik>
-        <h5 className="justify-center items-center mt-3 pb-8 text-gray text-md md:text-lg">
-          Don't have an account?{' '}
-          <Link href="/login">
-            <a className="text-blue" data-test="go-to-log-in">
-              Log in
-            </a>
-          </Link>
-        </h5>
+        <LogInMessage />
       </div>
     )
   }
 }
+
+const EmailField = ({ error, onFocusInput }) => (
+  <div className="w-full my-8">
+    <Field
+      className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
+      type="email"
+      name="email"
+      placeholder="Email address"
+      data-test="email-input"
+      onFocus={onFocusInput}
+    />
+    <ErrorMessage
+      name="email"
+      component="div"
+      className="w-4/5 mx-auto text-left text-red pl-1"
+      data-test="error-message"
+    />
+    {/* Shows up is there is an error response from the API and not from form vaildation from Formik */}
+    {error && <Error error={error} />}
+  </div>
+)
+
+const PasswordField = () => (
+  <div className="w-full mb-4">
+    <Field
+      className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue outline-none text-darkgray pl-4 text-xl"
+      type="password"
+      name="password"
+      placeholder="Password"
+      data-test="password-input"
+    />
+    <ErrorMessage
+      name="password"
+      component="div"
+      className="w-4/5 mx-auto text-left text-red pl-1"
+      data-test="error-message"
+    />
+  </div>
+)
+
+const LogInMessage = () => (
+  <h5 className="justify-center items-center mt-3 pb-8 text-gray text-md md:text-lg">
+    Don't have an account?{' '}
+    <Link href="/login">
+      <a className="text-blue" data-test="go-to-log-in">
+        Log in
+      </a>
+    </Link>
+  </h5>
+)
