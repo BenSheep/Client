@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Router from 'next/router'
+import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import api from '../../store/api'
 
@@ -113,7 +114,7 @@ class LogInForm extends React.Component {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="w-4/5 text-left text-red pl-16 pl-1"
+                  className="w-4/5 mx-auto text-left text-red pl-1"
                   data-test="error-message"
                 />
               </div>
@@ -128,6 +129,14 @@ class LogInForm extends React.Component {
             </Form>
           )}
         </Formik>
+        <h5 className="justify-center items-center mt-3 pb-8 text-gray text-md md:text-lg">
+          Don't have an account?{' '}
+          <Link href="/signup">
+            <a className="text-blue" data-test="go-to-sign-up">
+              Sign up
+            </a>
+          </Link>
+        </h5>
       </div>
     )
   }

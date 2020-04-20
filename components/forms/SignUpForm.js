@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Router from 'next/router'
+import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import api from '../../store/api'
 
@@ -17,7 +18,9 @@ class SignUpForm extends React.Component {
       errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = 'Invalid email address'
-    } else if (values.password.length < 8 || !/\d/.test(values.password)) {
+    }
+
+    if (values.password.length < 8 || !/\d/.test(values.password)) {
       errors.password =
         'Password must have at least 8 characters and contain a number'
     }
@@ -123,7 +126,7 @@ class SignUpForm extends React.Component {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="w-4/5 text-left text-red pl-16 pl-1"
+                  className="w-4/5 mx-auto text-left text-red pl-1"
                   data-test="error-message"
                 />
               </div>
@@ -138,6 +141,14 @@ class SignUpForm extends React.Component {
             </Form>
           )}
         </Formik>
+        <h5 className="justify-center items-center mt-3 pb-8 text-gray text-md md:text-lg">
+          Don't have an account?{' '}
+          <Link href="/login">
+            <a className="text-blue" data-test="go-to-log-in">
+              Log in
+            </a>
+          </Link>
+        </h5>
       </div>
     )
   }
