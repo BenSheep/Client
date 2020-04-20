@@ -39,7 +39,6 @@ export default class LogInForm extends React.Component {
 
   render() {
     const { error } = this.props
-    console.log(error)
     return (
       <div>
         <Formik
@@ -109,7 +108,7 @@ const PasswordField = ({ error, onFocusInput }) => (
       className="w-4/5 mx-auto text-left text-red pl-1"
       data-test="error-message"
     />
-    {error && error.error === 'INCORRECT_PASSWORD' && <Error error={error} />}
+    {error && error.status === 401 && <Error error={error} />}
   </div>
 )
 

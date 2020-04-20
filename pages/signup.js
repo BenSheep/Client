@@ -2,11 +2,11 @@ import React from 'react'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 
-import RegisterLayout from '../components/RegisterLayout'
-import SignUpForm from '../components/forms/SignUpForm'
+import RegisterLayout from '~/components/RegisterLayout'
+import SignUpForm from '~/components/forms/SignUpForm'
 
-import api from '../store/api'
-import { storeToken } from '../store/actions/userActions'
+import api from '~/store/api'
+import { storeToken } from '~/store/actions/userActions'
 
 class SignUp extends React.Component {
   constructor(props) {

@@ -1,4 +1,4 @@
-import { STORE_TOKEN } from '../actions/userActions'
+import { STORE_TOKEN } from '~/store/actions/userActions'
 const initialState = {}
 
 export default function userReducer(state = initialState, action) {

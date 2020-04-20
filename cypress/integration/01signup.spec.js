@@ -1,7 +1,6 @@
 import {
   USER_EMAIL,
   USER_PASSWORD,
-  BAD_EMAIL,
   BAD_PASSWROD,
   TAKEN_EMAIL,
 } from '../messages'

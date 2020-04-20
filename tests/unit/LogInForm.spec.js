@@ -3,9 +3,9 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import 'babel-polyfill'
 
-import LogInForm from '../../components/forms/LogInForm'
+import LogInForm from '~/components/forms/LogInForm'
 
-import { USER_EMAIL, USER_PASSWORD } from '../../cypress/messages'
+import { USER_EMAIL, USER_PASSWORD } from '~/cypress/messages'
 
 describe('Log in form', () => {
   let logInHandler, wrapper
