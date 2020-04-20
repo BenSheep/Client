@@ -11,10 +11,10 @@ import { storeToken } from '../store/actions/userActions'
 class SignUp extends React.Component {
   signUp(email, password) {
     const query = `mutation {
-      register(email: "${email}", password: "${password}") {
-        email
-      }
-    }`
+        register(email: "${email}", password: "${password}") {
+          email
+        }
+      }`
     api
       .post('', { query })
       .then(res => {
@@ -43,15 +43,10 @@ class SignUp extends React.Component {
     })
   }
 
-  signUpHandler = (email, password) => {
-    if (email && password) {
-      this.signUp(email, password)
-    }
-  }
   render() {
     return (
       <RegisterLayout>
-        <SignUpForm onSignUp={this.signUpHandler} />
+        <SignUpForm onSignUp={this.signUp} />
       </RegisterLayout>
     )
   }
