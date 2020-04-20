@@ -1,23 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
+import CourseCard from '~/components/CourseCard'
+
 import { getCourses } from '~/store/actions/coursesActions'
 
 class CoursesPage extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      days: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thurshday',
-        'Friday',
-        'Saturday',
-      ],
-    }
-  }
   componentWillMount() {
     const { token } = this.props.user
 
@@ -38,16 +26,7 @@ class CoursesPage extends React.Component {
           data-test="courses-list"
         >
           {courses.map(course => (
-            <div key={course.name} className="flex-col w-full md:w-1/2">
-              <div className="w-4/5 mx-auto bg-silver rounded-lg py-2 px-4">
-                <h3 className="text-2xl text-red">{course.name}</h3>
-                {course.schedule.length && (
-                  <p className="text-xl text-red">
-                    {this.state.days[course.schedule[0].day]}
-                  </p>
-                )}
-              </div>
-            </div>
+            <CourseCard key={course.name} course={course} />
           ))}
         </div>
       </div>
