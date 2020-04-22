@@ -20,7 +20,6 @@ export default function coursesReducer(state = initialState, action) {
         ...state,
         courseDetails: course,
       }
-
       return newState
     }
     default:

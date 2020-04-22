@@ -33,18 +33,18 @@ export const getCourseByName = (token, name) => dispatch => {
   if (token) {
     if (name) {
       const query = `query{
-        query(name: "${name}"){
-          name,
-          schedule{
-              day,
-              start,
-              end
-          },
-          semester,
-          grade,
-          professor
+        course(name: "${name}"){
+            name,
+            schedule{
+                day,
+                start,
+                end
+            },
+            semester,
+            grade,
+            professor
         }
-      }`
+    }`
 
       const options = createHeaders(token)
       return api.post('', { query }, options).then(res => {

@@ -7,13 +7,14 @@ import AppLayout from '~/components/AppLayout'
 import { getCourses } from '~/store/actions/coursesActions'
 
 class CoursesPage extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const { token } = this.props.user
 
     this.props.getCourses(token)
   }
   render() {
-    const { courses } = this.props
+    const { courses } = this.props.courses
+
     return (
       <AppLayout>
         <div className="flex-row">
@@ -27,9 +28,10 @@ class CoursesPage extends React.Component {
             className="mt-8 w-full flex flex-wrap flex-row"
             data-test="courses-list"
           >
-            {courses.map(course => (
-              <CourseCard key={course.name} course={course} />
-            ))}
+            {courses &&
+              courses.map(course => (
+                <CourseCard key={course.name} course={course} />
+              ))}
           </div>
         </div>
       </AppLayout>
