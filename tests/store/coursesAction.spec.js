@@ -1,4 +1,9 @@
-import { getCourses, STORE_COURSES } from '~/store/actions/coursesActions'
+import {
+  getCourses,
+  getCourseByName,
+  STORE_COURSES,
+  STORE_COURSE_DETAILS,
+} from '~/store/actions/coursesActions'
 import api from '~/store/api'
 jest.mock('../../store/api')
 
@@ -7,7 +12,7 @@ describe('Courses actions', () => {
     it('stores courses retrieved from the API', () => {
       const courses = [
         {
-          name: 'French  translation',
+          name: 'French translation',
           schedule: [
             {
               day: 3,
@@ -37,6 +42,37 @@ describe('Courses actions', () => {
           courses,
         })
       })
+    })
+    it("store a course's details retireved from the API", () => {
+      const course = {
+        name: 'French translation',
+        schedule: [
+          {
+            day: 3,
+          },
+        ],
+        professor: null,
+      }
+
+      const dispatch = jest.fn()
+
+      api.post.mockResolvedValue({
+        data: {
+          errors: null,
+          data: {
+            course,
+          },
+        },
+      })
+
+      return getCourseByName('token', 'French translation')(dispatch).then(
+        () => {
+          expect(dispatch).toHaveBeenCalledWith({
+            type: STORE_COURSE_DETAILS,
+            course,
+          })
+        }
+      )
     })
   })
 })
