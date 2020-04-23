@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import AppLayout from '~/components/AppLayout'
 import { getCourseByName } from '~/store/actions/coursesActions'
+import { capitalize } from '~/functions'
 
 class CourseDetailsPage extends Component {
   static getInitialProps({ query }) {
@@ -25,14 +26,14 @@ class CourseDetailsPage extends Component {
         {courseDetails ? (
           <div data-test="course-detail-card" className="text-blue">
             <h1 className="text-xl md:text-4xl" data-test="course-name">
-              {courseDetails.name}
+              {capitalize(courseDetails.name)}
             </h1>
             <p>Semester: {courseDetails.semester}</p>
             {courseDetails.grade ? (
-              <h3>Your grade is {courseDetails.grade}</h3>
-            ) : (
-              <h3>Your grade hasn't come out yet</h3>
-            )}
+              <h3 data-test="course-grade">
+                Your grade is {courseDetails.grade}
+              </h3>
+            ) : null}
           </div>
         ) : (
           <h1>loading...</h1>

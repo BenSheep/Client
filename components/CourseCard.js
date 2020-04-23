@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
+import { capitalize } from '~/functions'
+
 const CourseCard = ({ course }) => {
   const [days] = useState([
     'Sunday',
@@ -27,7 +29,7 @@ const CourseCard = ({ course }) => {
       >
         <div className="h-full w-4/5 mx-auto shadow-lg hover:shadow-xl cursor-pointer orange-gradient rounded-lg py-2 px-4">
           <h3 data-test="course-name" className="mt-4 text-2xl text-blue">
-            {course.name}
+            {capitalize(course.name)}
           </h3>
           {course.schedule.length
             ? course.schedule.map((sched, index) => (

@@ -1,6 +1,7 @@
 import { logInWithEmailAndPassword } from '../functions'
 
 const courseName = 'French translation'
+const otherCourseName = 'Networks'
 
 describe('User application index page', () => {
   it('displays a list of user courses', () => {
@@ -9,6 +10,8 @@ describe('User application index page', () => {
     logInWithEmailAndPassword()
     goToCoursesPage()
     goToCourseDetailsPage()
+    goToCoursesPage()
+    goToOtherCoursesDetailsPage()
   })
 })
 
@@ -33,4 +36,19 @@ const goToCourseDetailsPage = () => {
   cy.get('[data-test="course-detail-card"]')
 
   cy.get('[data-test="course-name"]').contains(courseName)
+
+  cy.get('[data-test="course-grade"]').should('not.be.visible')
+}
+
+const goToOtherCoursesDetailsPage = () => {
+  cy.get('[data-test="course-card"]')
+    .last()
+    .find('[data-test="course-name"]')
+    .click()
+
+  cy.get('[data-test="course-detail-card"]')
+
+  cy.get('[data-test="course-name"]').contains(otherCourseName)
+
+  cy.get('[data-test="course-grade"]')
 }
