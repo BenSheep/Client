@@ -13,7 +13,7 @@ const AppLayout = props => (
             <Link href="/app/courses">
               <a
                 data-test="courses-tab-button"
-                className="p-4 block w-full hover:rounded-md hover:bg-light-blue hover:cursor-pointer"
+                className="p-4 block w-full hover:bg-light-blue hover:cursor-pointer"
               >
                 My courses
               </a>
