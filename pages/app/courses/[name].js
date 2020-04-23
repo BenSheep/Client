@@ -9,11 +9,16 @@ import {
 import { capitalize, formatNumberTh } from '~/functions'
 
 class CourseDetailsPage extends Component {
+  // get the url query
   static getInitialProps({ query }) {
     return { query }
   }
+
   componentDidMount() {
     const { courseDetails } = this.props.courses
+
+    // check if course is already in the redux store
+
     if (courseDetails) {
       if (courseDetails.name === this.formatName(this.props.query.name)) {
         return
@@ -26,11 +31,7 @@ class CourseDetailsPage extends Component {
     this.props.getCourseByName(token, courseName)
   }
 
-  componentWillUnmount() {
-    // const { courseDetails } = this.props.courses
-    // this.props.deleteDetailedCourse(courseDetails)
-  }
-
+  // from pretty link to actual name
   formatName = name => {
     return name.replace('-', ' ')
   }
@@ -52,20 +53,9 @@ class CourseDetailsPage extends Component {
               {formatNumberTh(courseDetails.semester)} semester
             </h1>
             {courseDetails.grade ? (
-              <div className="flex flex-wrap flex-col w-full mx-auto">
-                <h3
-                  data-test="course-grade-header"
-                  className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
-                >
-                  Grade
-                </h3>
-                <p
-                  data-test="course-grade"
-                  className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
-                >
-                  {courseDetails.grade}
-                </p>
-              </div>
+              <CourseGradeComponent
+                grade={courseDetails.grade}
+              ></CourseGradeComponent>
             ) : null}
           </div>
         ) : (
@@ -75,6 +65,24 @@ class CourseDetailsPage extends Component {
     )
   }
 }
+
+const CourseGradeComponent = props => (
+  <div className="flex flex-wrap flex-col w-full mx-auto">
+    <h3
+      data-test="course-grade-header"
+      className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
+    >
+      Grade
+    </h3>
+    <p
+      data-test="course-grade"
+      className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
+    >
+      {props.grade}
+    </p>
+  </div>
+)
+
 function mapStateToProps(state) {
   return {
     user: state.user,

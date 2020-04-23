@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import api from '../api'
 
 export const STORE_COURSES = 'STORE_COURSES'
@@ -27,7 +28,7 @@ export const getCourses = token => dispatch => {
       }
     })
   }
-  throw new Error('No token provided')
+  redirectToLogin()
 }
 
 export const getCourseByName = (token, name) => dispatch => {
@@ -61,7 +62,7 @@ export const getCourseByName = (token, name) => dispatch => {
     }
     throw new Error('No name provided')
   }
-  throw new Error('No token provided')
+  redirectToLogin()
 }
 
 export const deleteDetailedCourse = course => {
@@ -80,4 +81,8 @@ const createHeaders = token => {
       Authorization: `Bearer ${token}`,
     },
   }
+}
+
+const redirectToLogin = () => {
+  Router.replace('/login')
 }
