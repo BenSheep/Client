@@ -3,7 +3,7 @@ import { logInWithEmailAndPassword } from '../functions'
 const courseName = 'French translation'
 const otherCourseName = 'Networks'
 
-describe('User application index page', () => {
+describe('Courses page', () => {
   it('displays a list of user courses', () => {
     cy.visit('http://localhost:3000/login')
 

@@ -8,7 +8,7 @@ import {
 } from '../messages'
 
 import { logInWithEmailAndPassword } from '../functions'
-describe('log in', () => {
+describe('Log in', () => {
   it("fails login a user in until it doesn't", () => {
     cy.visit('localhost:3000')
 

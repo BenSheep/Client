@@ -10,7 +10,7 @@ import api from '~/store/api'
 jest.mock('../../store/api')
 
 describe('Courses actions', () => {
-  describe('Get courses', () => {
+  describe('Courses', () => {
     it('stores courses retrieved from the API', () => {
       const courses = [
         {
@@ -45,8 +45,12 @@ describe('Courses actions', () => {
         })
       })
     })
-    it("store a course's details retireved from the API", () => {
-      const course = {
+  })
+  describe('Course details', () => {
+    let course
+
+    beforeEach(() => {
+      course = {
         name: 'French translation',
         schedule: [
           {
@@ -55,7 +59,9 @@ describe('Courses actions', () => {
         ],
         professor: null,
       }
+    })
 
+    it("store a course's details retireved from the API", () => {
       const dispatch = jest.fn()
 
       api.post.mockResolvedValue({
@@ -77,15 +83,6 @@ describe('Courses actions', () => {
       )
     }),
       it("deletes a course's details from the store", () => {
-        const course = {
-          name: 'French translation',
-          schedule: [
-            {
-              day: 3,
-            },
-          ],
-          professor: null,
-        }
         const expectedAction = {
           type: REMOVE_COURSE_DETAILS,
           course,

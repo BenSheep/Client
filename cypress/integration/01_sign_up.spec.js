@@ -4,7 +4,7 @@ import {
   BAD_PASSWORD,
   TAKEN_EMAIL,
 } from '../messages'
-describe('sign up', () => {
+describe('Sign up', () => {
   it("fails registering a user until it doesn't", () => {
     cy.visit('localhost:3000')
 

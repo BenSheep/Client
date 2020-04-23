@@ -1,6 +1,6 @@
 import { logInWithEmailAndPassword } from '../functions'
 
-describe('User application index page', () => {
+describe('Course page', () => {
   it('displays a list of user courses', () => {
     cy.visit('http://localhost:3000/login')
 
