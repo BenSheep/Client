@@ -14,6 +14,10 @@ nav {
   min-height: 5em;
 }
 
+.icon-container:hover {
+  @apply orange-gradient
+}
+
 .cta {
   @apply inline-block px-4 py-2 leading-none border rounded mt-4;
   background-color: var(--main-blue);
@@ -23,22 +27,18 @@ nav {
 
 .cta-lg {
   @apply inline-block py-4 leading-none border rounded-lg;
-  background: linear-gradient(
-    to bottom right,
-    var(--main-blue) 0%,
-    var(--main-red) 85%,
-    var(--main-orange) 100%
-  );
+  background: linear-gradient(to bottom right,
+      var(--main-blue) 0%,
+      var(--main-red) 85%,
+      var(--main-orange) 100%);
   color: #fff;
 }
 
 #landing h1 {
   font-size: 6rem;
-  background: linear-gradient(
-    to right,
-    var(--main-blue) 0%,
-    var(--main-red) 100%
-  );
+  background: linear-gradient(to right,
+      var(--main-blue) 0%,
+      var(--main-red) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

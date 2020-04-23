@@ -32,7 +32,7 @@ const AppLayout = props => (
         </ul>
       </nav>
     </div>
-    <div className="flex-col w-10/12 lg:px-12">{props.children}</div>
+    <div className="flex-col w-10/12 mx-auto lg:px-12">{props.children}</div>
   </div>
 )
 

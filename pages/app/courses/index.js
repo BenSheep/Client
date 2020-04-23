@@ -17,12 +17,12 @@ class CoursesPage extends React.Component {
 
     return (
       <AppLayout>
-        <div className="flex-row">
+        <div className="flex-col md:flex-row w-11/12 mx-auto my-8">
           <h1
-            className="w-full text-xl md:text-4xl text-blue"
+            className="w-full text-2xl md:text-4xl text-blue tracking-wide"
             data-test="courses-header"
           >
-            My courses
+            My Courses
           </h1>
           <div
             className="mt-8 w-full flex flex-wrap flex-row"
