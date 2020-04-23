@@ -1,8 +1,10 @@
 import {
   getCourses,
   getCourseByName,
+  deleteDetailedCourse,
   STORE_COURSES,
   STORE_COURSE_DETAILS,
+  REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
 import api from '~/store/api'
 jest.mock('../../store/api')
@@ -73,6 +75,23 @@ describe('Courses actions', () => {
           })
         }
       )
-    })
+    }),
+      it("deletes a course's details from the store", () => {
+        const course = {
+          name: 'French translation',
+          schedule: [
+            {
+              day: 3,
+            },
+          ],
+          professor: null,
+        }
+        const expectedAction = {
+          type: REMOVE_COURSE_DETAILS,
+          course,
+        }
+
+        expect(deleteDetailedCourse(course)).toEqual(expectedAction)
+      })
   })
 })

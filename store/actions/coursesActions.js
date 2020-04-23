@@ -2,6 +2,7 @@ import api from '../api'
 
 export const STORE_COURSES = 'STORE_COURSES'
 export const STORE_COURSE_DETAILS = 'STORE_COURSE_DETAILS'
+export const REMOVE_COURSE_DETAILS = 'REMOVE_COURSE_DETAILS'
 
 export const getCourses = token => dispatch => {
   if (token) {
@@ -61,6 +62,16 @@ export const getCourseByName = (token, name) => dispatch => {
     throw new Error('No name provided')
   }
   throw new Error('No token provided')
+}
+
+export const deleteDetailedCourse = course => {
+  if (course) {
+    return {
+      type: REMOVE_COURSE_DETAILS,
+      course,
+    }
+  }
+  throw new Error('No course provided')
 }
 
 const createHeaders = token => {

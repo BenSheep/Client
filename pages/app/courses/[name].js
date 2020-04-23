@@ -15,6 +15,8 @@ class CourseDetailsPage extends Component {
     this.props.getCourseByName(token, courseName)
   }
 
+  componentWillUnmount() {}
+
   formatName = name => {
     return name.replace('-', ' ')
   }
