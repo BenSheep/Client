@@ -112,7 +112,7 @@ const PasswordField = () => (
 
 const LogInMessage = () => (
   <h5 className="justify-center items-center mt-3 pb-8 text-gray text-md md:text-lg">
-    Don't have an account?{' '}
+    Already have an account?{' '}
     <Link href="/login">
       <a className="text-blue" data-test="go-to-log-in">
         Log in

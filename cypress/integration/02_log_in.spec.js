@@ -3,10 +3,12 @@ import {
   USER_PASSWORD,
   NON_EXISTENT_EMAIL,
   NON_EXISTENT_USERNAME,
-  BAD_PASSWROD,
+  BAD_PASSWORD,
   WRONG_PASSWORD,
 } from '../messages'
-describe('log in', () => {
+
+import { logInWithEmailAndPassword } from '../functions'
+describe('Log in', () => {
   it("fails login a user in until it doesn't", () => {
     cy.visit('localhost:3000')
 
@@ -34,7 +36,7 @@ const tryWrongPassword = () => {
   cy.get('[data-test="password-input"]')
     .focus()
     .clear()
-    .type(BAD_PASSWROD)
+    .type(BAD_PASSWORD)
 
   cy.get('[data-test="submit"]').click()
 
@@ -85,20 +87,4 @@ const tryNonExistentUsername = () => {
   cy.get('[data-test="submit"]').click()
 
   cy.get('[data-test="error-message"]').contains('We did not find ')
-}
-
-const logInWithEmailAndPassword = () => {
-  cy.get('[data-test="email-username-input"]')
-    .focus()
-    .clear()
-    .type(USER_EMAIL)
-
-  cy.get('[data-test="password-input"]')
-    .focus()
-    .clear()
-    .type(USER_PASSWORD)
-
-  cy.get('[data-test="submit"]').click()
-
-  cy.get('[data-test="navbar"]')
 }

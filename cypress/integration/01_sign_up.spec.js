@@ -1,10 +1,10 @@
 import {
   USER_EMAIL,
   USER_PASSWORD,
-  BAD_PASSWROD,
+  BAD_PASSWORD,
   TAKEN_EMAIL,
 } from '../messages'
-describe('sign up', () => {
+describe('Sign up', () => {
   it("fails registering a user until it doesn't", () => {
     cy.visit('localhost:3000')
 
@@ -29,7 +29,7 @@ const tryBadPassword = () => {
   cy.get('[data-test="password-input"]')
     .focus()
     .clear()
-    .type(BAD_PASSWROD)
+    .type(BAD_PASSWORD)
 
   cy.get('[data-test="submit"]').click()
 
