@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import AppLayout from '~/components/AppLayout'
-import { getCourseByName } from '~/store/actions/coursesActions'
+import {
+  getCourseByName,
+  deleteDetailedCourse,
+} from '~/store/actions/coursesActions'
 import { capitalize, formatNumberTh } from '~/functions'
 
 class CourseDetailsPage extends Component {
@@ -10,12 +13,23 @@ class CourseDetailsPage extends Component {
     return { query }
   }
   componentDidMount() {
+    const { courseDetails } = this.props.courses
+    if (courseDetails) {
+      if (courseDetails.name === this.formatName(this.props.query.name)) {
+        return
+      }
+      this.props.deleteDetailedCourse(courseDetails)
+    }
+
     const { token } = this.props.user
     const courseName = this.formatName(this.props.query.name)
     this.props.getCourseByName(token, courseName)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    // const { courseDetails } = this.props.courses
+    // this.props.deleteDetailedCourse(courseDetails)
+  }
 
   formatName = name => {
     return name.replace('-', ' ')
@@ -70,6 +84,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getCourseByName,
+  deleteDetailedCourse,
 }
 
 export default connect(
