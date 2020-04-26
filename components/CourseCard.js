@@ -4,13 +4,7 @@ import Link from 'next/link'
 import { capitalize, formatNumberTh } from '~/functions'
 
 const CourseCard = ({ course }) => {
-  const [days] = useState([
-    { day: 'Monday', hasCourse: false },
-    { day: 'Tuesday', hasCourse: false },
-    { day: 'Wednesday', hasCourse: false },
-    { day: 'Thursday', hasCourse: false },
-    { day: 'Friday', hasCourse: false },
-  ])
+  const [days] = useState(createDaysObjects(course.schedule))
 
   const [isCollapsed, toggleCollapse] = useState(false)
 
@@ -77,14 +71,35 @@ const CourseCard = ({ course }) => {
   )
 }
 
-const CollapsedScheduleContent = props => {
-  // minus one because we removed Sunday and the array is not anymore 0 based really
-  props.schedule.map(sched => {
-    props.days[sched.day - 1].hasCourse = true
-    props.days[sched.day - 1].start = minutesTo24Hours(sched.start)
-    props.days[sched.day - 1].end = minutesTo24Hours(sched.end)
-  })
+/**
+ * Creates a generic array of days. If the schedule is known, update the days array for the days that the course is schedule and
+ * its starting and ending time
+ * @param {array} schedule The schedule for the course
+ * @returns {array} The complete schedule array that will be used to output the collapsable card
+ */
+const createDaysObjects = schedule => {
+  const days = [
+    { day: 'Monday', hasCourse: false },
+    { day: 'Tuesday', hasCourse: false },
+    { day: 'Wednesday', hasCourse: false },
+    { day: 'Thursday', hasCourse: false },
+    { day: 'Friday', hasCourse: false },
+  ]
 
+  // Do not change array if schedule for course is uknown
+  if (schedule) {
+    // minus one because we removed Sunday and the array is not anymore 0 based really
+    schedule.map(sched => {
+      days[sched.day - 1].hasCourse = true
+      days[sched.day - 1].start = minutesTo24Hours(sched.start)
+      days[sched.day - 1].end = minutesTo24Hours(sched.end)
+    })
+  }
+
+  return days
+}
+
+const CollapsedScheduleContent = props => {
   return props.days.map(day => (
     <div
       key={day.day}
