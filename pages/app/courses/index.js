@@ -23,6 +23,10 @@ class CoursesPage extends React.Component {
     })
   }
 
+  onClickOutsideHandler = () => {
+    this.setState({ showModal: false })
+  }
+
   render() {
     const { courses } = this.props.courses
     const { showModal } = this.state
@@ -59,6 +63,7 @@ class CoursesPage extends React.Component {
           {showModal ? (
             <AddCourseModal
               onAddCourse={this.onAddCourseHandler}
+              onClickOutside={this.onClickOutsideHandler}
             ></AddCourseModal>
           ) : null}
         </div>
