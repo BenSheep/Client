@@ -49,7 +49,9 @@ const CourseCard = ({ course }) => {
               >
                 <img
                   className="inline w-3 md:w-4 opacity-75 rounded-full"
-                  src="/icons/expand.png"
+                  src={
+                    isCollapsed ? '/icons/collapse.png' : '/icons/expand.png'
+                  }
                 />
               </span>
             </p>
