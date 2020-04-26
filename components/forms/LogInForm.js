@@ -14,9 +14,8 @@ export default class LogInForm extends React.Component {
       errors.emailOrUsername = 'Required'
     }
 
-    if (values.password.length < 8 || !/\d/.test(values.password)) {
-      errors.password =
-        'Password must have at least 8 characters and contain a number'
+    if (!values.password) {
+      errors.password = 'Required'
     }
 
     return errors

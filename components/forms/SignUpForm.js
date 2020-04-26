@@ -72,6 +72,11 @@ export default class SignUpForm extends React.Component {
               </h3>
               <EmailField error={error} onFocusInput={this.handleOnFocus} />
               <PasswordField />
+              {!error && (
+                <p className="w-4/5 mx-auto text-sm text-left text-gray pl-1">
+                  Password must have at least 8 characters and contain a number
+                </p>
+              )}
               <button
                 className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase testButton"
                 data-test="submit"
