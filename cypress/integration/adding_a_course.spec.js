@@ -14,6 +14,7 @@ describe('Courses page', () => {
     checkModalShown()
     checkModalClosesOnClickOutside()
     openAddCourseModal()
+    attemptSubmitWithoutCourseName()
     fillCourseInformationAndSubmit(courseName)
     checkModalNotShown()
     checkNewCourseShown(courseName)
@@ -55,6 +56,11 @@ const checkModalClosesOnClickOutside = () => {
 
 const openAddCourseModal = () => {
   cy.get('[data-test="add-course-button"').click()
+}
+
+const attemptSubmitWithoutCourseName = () => {
+  cy.get('[data-test="submit"]').click()
+  cy.contains('Required')
 }
 
 const fillCourseInformationAndSubmit = courseName => {

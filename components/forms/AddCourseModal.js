@@ -18,6 +18,15 @@ export default class AddCourseModal extends Component {
     document.removeEventListener('click', this.handleClickOutside)
   }
 
+  validate = ({ courseName }) => {
+    const errors = {}
+    if (!courseName) {
+      errors.courseName = 'Required'
+    }
+
+    return errors
+  }
+
   handleOnSubmit = (values, { setSubmitting }) => {
     setSubmitting(true)
     const { courseName } = values

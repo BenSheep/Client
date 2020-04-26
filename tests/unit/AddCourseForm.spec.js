@@ -6,14 +6,21 @@ import 'babel-polyfill'
 import AddCourseModal from '~/components/forms/AddCourseModal'
 
 describe('AddCourseForm', () => {
-  it('clicks add course', async () => {
-    const courseName = 'Databases'
-    const addCourseHandler = jest.fn()
+  let courseName, addCourseHandler, addCourseModal, clickOutsideHandler
 
-    const addCourseModal = mount(
-      <AddCourseModal onAddCourse={addCourseHandler} />
+  beforeEach(() => {
+    courseName = 'Databases'
+    addCourseHandler = jest.fn()
+    clickOutsideHandler = jest.fn()
+
+    addCourseModal = mount(
+      <AddCourseModal
+        onAddCourse={addCourseHandler}
+        onClickOutside={clickOutsideHandler}
+      />
     )
-
+  })
+  it('clicks add course', async () => {
     await act(async () => {
       await addCourseModal
         .find('input[data-test="course-name-input"]')
@@ -35,5 +42,16 @@ describe('AddCourseForm', () => {
     addCourseModal.find('[data-test="submit"]').simulate('click')
 
     expect(addCourseHandler).toHaveBeenCalledWith(courseName)
-  })
+  }),
+    it('clicks add course without giving a name and fails', async () => {
+      await act(async () => {
+        await addCourseModal
+          .find('form')
+          .simulate('submit', { preventDefault: () => {} })
+      })
+
+      addCourseModal.find('[data-test="submit"]').simulate('click')
+
+      expect(addCourseHandler).not.toHaveBeenCalled()
+    })
 })
