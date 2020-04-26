@@ -40,7 +40,9 @@ export default class LogInForm extends React.Component {
       .catch(() => {
         this.setState({ error: { message: 'something went terribly wrong' } })
       })
-      .then(setSubmitting(false))
+      .then(() => {
+        setSubmitting(false)
+      })
   }
 
   handleOnFocus = () => {
@@ -70,7 +72,7 @@ export default class LogInForm extends React.Component {
                 type="submit"
                 disabled={isSubmitting}
               >
-                Log in
+                {isSubmitting ? 'Logging in...' : 'Log in'}
               </button>
             </Form>
           )}

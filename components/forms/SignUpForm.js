@@ -45,7 +45,6 @@ export default class SignUpForm extends React.Component {
         this.setState({ error })
       })
       .then(() => {
-        console.log('set submitting')
         setSubmitting(false)
       })
   }
