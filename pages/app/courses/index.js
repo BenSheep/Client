@@ -3,17 +3,27 @@ import { connect } from 'react-redux'
 
 import CourseCard from '~/components/CourseCard'
 import AppLayout from '~/components/AppLayout'
+import AddCourseModal from '~/components/forms/AddCourseModal'
 
 import { getCourses } from '~/store/actions/coursesActions'
 
 class CoursesPage extends React.Component {
+  state = { showModal: false }
   componentDidMount() {
     const { token } = this.props.user
 
     this.props.getCourses(token)
+    this.addCourse = this.addCourse.bind(this)
   }
+
+  addCourse(courseName) {
+    this.setState({ showModal: false })
+    return Promise
+  }
+
   render() {
     const { courses } = this.props.courses
+    const { showModal } = this.state
 
     return (
       <AppLayout>
@@ -29,6 +39,7 @@ class CoursesPage extends React.Component {
               data-test="add-course-button"
               className="flex flex-col hidden relative md:inline w-4/12 xl:w-3/12 orange-gradient text-white justify-center items-center align-center rounded-full button"
               type="button"
+              onClick={() => this.setState({ showModal: !showModal })}
             >
               <img className="bg-orange rounded-full" src="/icons/add.png" />
               <span className="text-xl">Add Course</span>
@@ -43,6 +54,9 @@ class CoursesPage extends React.Component {
                 <CourseCard key={course.name} course={course} />
               ))}
           </div>
+          {showModal ? (
+            <AddCourseModal onAddCourse={this.addCourse}></AddCourseModal>
+          ) : null}
         </div>
       </AppLayout>
     )

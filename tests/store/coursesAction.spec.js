@@ -1,9 +1,11 @@
 import {
   getCourses,
   getCourseByName,
+  addCourse,
   deleteDetailedCourse,
   STORE_COURSES,
   STORE_COURSE_DETAILS,
+  ADD_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
 import api from '~/store/api'
@@ -42,6 +44,30 @@ describe('Courses actions', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: STORE_COURSES,
           courses,
+        })
+      })
+    })
+    it('Sends addCourse request to API and stores new course', () => {
+      const courseName = 'Databases'
+
+      const course = {
+        name: courseName,
+      }
+      const dispatch = jest.fn()
+
+      api.post.mockResolvedValue({
+        data: {
+          errors: null,
+          data: {
+            addCourse: course,
+          },
+        },
+      })
+
+      return addCourse('token', courseName)(dispatch).then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: ADD_COURSE,
+          course,
         })
       })
     })

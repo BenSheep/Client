@@ -7,7 +7,7 @@
     "dev": "next",
     "lint": "eslint components pages store cypress/integration tests",
     "e2e": "cypress open",
-    "test": "jest tests",
+    "test": "jest tests --silent",
     "fix": "eslint --fix components pages store",
     "build": "next build",
     "start": "next start"
