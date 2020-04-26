@@ -10,8 +10,40 @@
   --main-orange: #ee964b;
 }
 
-nav {
-  min-height: 5em;
+ul>li:first-of-type>a {
+  border-top-right-radius: 1rem;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.icon-container:hover {
+  @apply orange-gradient
+}
+
+.button {
+  line-height: 54px;
+  vertical-align: middle
+}
+
+.button img {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 2rem;
+  padding: .25rem;
 }
 
 .cta {
@@ -23,22 +55,25 @@ nav {
 
 .cta-lg {
   @apply inline-block py-4 leading-none border rounded-lg;
-  background: linear-gradient(
-    to bottom right,
-    var(--main-blue) 0%,
-    var(--main-red) 85%,
-    var(--main-orange) 100%
-  );
+  background: linear-gradient(to bottom right,
+      var(--main-blue) 0%,
+      var(--main-red) 85%,
+      var(--main-orange) 100%);
   color: #fff;
+}
+
+.cta-lg:disabled {
+  cursor: default;
+  background-size: 300% 300%;
+  animation: gradient 2.5s ease infinite;
+  opacity: .9;
 }
 
 #landing h1 {
   font-size: 6rem;
-  background: linear-gradient(
-    to right,
-    var(--main-blue) 0%,
-    var(--main-red) 100%
-  );
+  background: linear-gradient(to right,
+      var(--main-blue) 0%,
+      var(--main-red) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

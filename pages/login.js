@@ -1,5 +1,4 @@
 import React from 'react'
-import Router from 'next/router'
 import { connect } from 'react-redux'
 
 import RegisterLayout from '~/components/RegisterLayout'
@@ -9,15 +8,7 @@ import api from '~/store/api'
 import { storeToken } from '~/store/actions/userActions'
 
 class LogIn extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { error: null }
-
-    this.logIn = this.logIn.bind(this)
-  }
-
-  logIn = (emailOrUsername, password, setSubmitting) => {
+  logIn = (emailOrUsername, password) => {
     let query
     if (emailOrUsername.indexOf('@') !== -1) {
       query = `mutation {
@@ -32,33 +23,15 @@ class LogIn extends React.Component {
             }
           }`
     }
-    api
-      .post('', { query })
-      .then(res => {
-        if (res.data.errors) {
-          this.setState({ error: res.data.errors[0] })
-          return
-        }
-        const { token } = res.data.data.login
-        this.props.storeToken(token)
-        Router.push('/app')
-      })
-      .catch(() => {
-        this.setState({ error: { message: 'something went terribly wrong' } })
-      })
-      .then(setSubmitting(false))
+    return api.post('', { query })
   }
 
-  clearErrors = () => {
-    this.setState({ error: null })
-  }
   render() {
     return (
       <RegisterLayout>
         <LogInForm
           onLogIn={this.logIn}
-          error={this.state.error}
-          onClearErrors={this.clearErrors}
+          onSuccess={token => this.props.storeToken(token)}
         />
       </RegisterLayout>
     )

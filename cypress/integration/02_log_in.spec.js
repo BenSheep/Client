@@ -9,7 +9,7 @@ import {
 
 import { logInWithEmailAndPassword } from '../functions'
 describe('Log in', () => {
-  it("fails login a user in until it doesn't", () => {
+  it("fails loging a user in until it doesn't", () => {
     cy.visit('localhost:3000')
 
     cy.get('[data-test="sign-up-button"]').click()
@@ -40,7 +40,7 @@ const tryWrongPassword = () => {
 
   cy.get('[data-test="submit"]').click()
 
-  cy.get('[data-test="error-message"]').contains('Password must have at')
+  cy.get('[data-test="error-message"]').contains('Password is incorrect')
 
   cy.get('[data-test="email-username-input"]')
     .focus()

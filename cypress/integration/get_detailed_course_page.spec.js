@@ -20,7 +20,7 @@ const goToCoursesPage = () => {
 
   cy.get('[data-test="courses-tab-button"]').click()
 
-  cy.get('[data-test="courses-header"]').contains('My courses')
+  cy.get('[data-test="courses-header"]').contains('My Courses')
 
   cy.get('[data-test="courses-list"]')
     .children()
@@ -50,5 +50,7 @@ const goToOtherCoursesDetailsPage = () => {
 
   cy.get('[data-test="course-name"]').contains(otherCourseName)
 
-  cy.get('[data-test="course-grade"]')
+  cy.get('[data-test="course-professor-header"]')
+  cy.get('[data-test="course-grade-header"]')
+  cy.get('[data-test="course-grade"]').contains(9)
 }

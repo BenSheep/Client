@@ -9,11 +9,14 @@ export const getCourses = token => dispatch => {
   if (token) {
     const query = `query{
         myCourses {
-          _id,
             name,
             schedule {
-                day
-            }
+                day,
+                start,
+                end,
+            },
+            semester,
+            grade
         }
     }`
     const options = createHeaders(token)

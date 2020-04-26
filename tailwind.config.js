@@ -19,11 +19,15 @@ module.exports = {
   plugins: [
     plugin(({ addUtilities }) => {
       const newUtilities = {
+        '.min-h-5em': {
+          'min-height': '5em',
+        },
         '.orange-gradient': {
-          background: 'linear-gradient(120deg, #f9f8f4 0%, #eae9f2 100%)',
+          background: 'linear-gradient(120deg, #ee964b 0%, #f4d35e 100%)',
+          transition: 'all .4s ease-out',
         },
         '.silver-gradient': {
-          background: 'linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)',
+          background: 'linear-gradient(120deg, #ebedee 0%, #EFF1F1 100%)',
         },
         '.rounded-xl': {
           'border-radius': '1rem',

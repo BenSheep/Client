@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -13,32 +14,42 @@ export default class LogInForm extends React.Component {
       errors.emailOrUsername = 'Required'
     }
 
-    if (values.password.length < 8 || !/\d/.test(values.password)) {
-      errors.password =
-        'Password must have at least 8 characters and contain a number'
+    if (!values.password) {
+      errors.password = 'Required'
     }
 
     return errors
   }
 
   handleOnSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true)
-
     const { emailOrUsername, password } = values
 
-    const { onLogIn } = this.props
+    const { onLogIn, onSuccess } = this.props
 
-    onLogIn(emailOrUsername, password, setSubmitting)
+    onLogIn(emailOrUsername, password)
+      .then(res => {
+        if (res.data.errors) {
+          this.setState({ error: res.data.errors[0] })
+          return
+        }
+        const { token } = res.data.data.login
+        onSuccess(token)
+        Router.push('/app')
+      })
+      .catch(() => {
+        this.setState({ error: { message: 'something went terribly wrong' } })
+      })
+      .then(() => {
+        setSubmitting(false)
+      })
   }
 
   handleOnFocus = () => {
-    const { onClearErrors } = this.props
-
-    onClearErrors()
+    this.setState({ error: null })
   }
 
   render() {
-    const { error } = this.props
+    const { error } = this.state
     return (
       <div>
         <Formik
@@ -60,7 +71,7 @@ export default class LogInForm extends React.Component {
                 type="submit"
                 disabled={isSubmitting}
               >
-                Log in
+                {isSubmitting ? 'Logging in...' : 'Log in'}
               </button>
             </Form>
           )}

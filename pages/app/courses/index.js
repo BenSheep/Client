@@ -17,13 +17,23 @@ class CoursesPage extends React.Component {
 
     return (
       <AppLayout>
-        <div className="flex-row">
-          <h1
-            className="w-full text-xl md:text-4xl text-blue"
-            data-test="courses-header"
-          >
-            My courses
-          </h1>
+        <div className="flex-col md:flex-row w-11/12 mx-auto my-8">
+          <div className="flex flex-wrap">
+            <h1
+              className="flex flex-col w-full md:w-8/12 xl:w-9/12 text-2xl md:text-4xl text-blue tracking-wide"
+              data-test="courses-header"
+            >
+              My Courses
+            </h1>
+            <button
+              data-test="add-course-button"
+              className="flex flex-col hidden relative md:inline w-4/12 xl:w-3/12 orange-gradient text-white justify-center items-center align-center rounded-full button"
+              type="button"
+            >
+              <img className="bg-orange rounded-full" src="/icons/add.png" />
+              <span className="text-xl">Add Course</span>
+            </button>
+          </div>
           <div
             className="mt-8 w-full flex flex-wrap flex-row"
             data-test="courses-list"

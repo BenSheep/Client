@@ -1,5 +1,4 @@
 import React from 'react'
-import Router from 'next/router'
 import { connect } from 'react-redux'
 
 import RegisterLayout from '~/components/RegisterLayout'
@@ -9,33 +8,13 @@ import api from '~/store/api'
 import { storeToken } from '~/store/actions/userActions'
 
 class SignUp extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { error: null }
-    this.signUp = this.signUp.bind(this)
-  }
-
-  signUp(email, password, setSubmitting) {
+  signUp(email, password) {
     const query = `mutation {
         register(email: "${email}", password: "${password}") {
           email
         }
       }`
-    api
-      .post('', { query })
-      .then(res => {
-        if (res.data.errors) {
-          this.setState({ error: res.data.errors[0], isEmailError: true })
-          return
-        }
-        this.setState({ error: null })
-        this.logIn(email, password)
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-      .then(setSubmitting(false))
+    return api.post('', { query })
   }
 
   logIn = (email, password) => {
@@ -44,15 +23,7 @@ class SignUp extends React.Component {
         token
       }
     }`
-    api.post('', { query }).then(res => {
-      const { token } = res.data.data.login
-      this.props.storeToken(token)
-      Router.push('/app')
-    })
-  }
-
-  clearErrors = () => {
-    this.setState({ error: null })
+    return api.post('', { query })
   }
 
   render() {
@@ -60,8 +31,8 @@ class SignUp extends React.Component {
       <RegisterLayout>
         <SignUpForm
           onSignUp={this.signUp}
-          error={this.state.error}
-          onClearErrors={this.clearErrors}
+          onLogIn={this.logIn}
+          onSuccess={token => this.props.storeToken(token)}
         />
       </RegisterLayout>
     )
