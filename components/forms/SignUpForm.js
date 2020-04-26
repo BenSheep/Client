@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import Error from './Error'
 
 export default class SignUpForm extends React.Component {
+  state = { error: null }
+
   validate = values => {
     const errors = {}
     if (!values.email) {
@@ -22,21 +24,32 @@ export default class SignUpForm extends React.Component {
   }
 
   handleOnSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true)
-
     const { email, password } = values
     const { onSignUp } = this.props
 
-    onSignUp(email, password, setSubmitting)
+    onSignUp(email, password)
+      .then(res => {
+        if (res.data.errors) {
+          this.setState({ error: res.data.errors[0] })
+          return
+        }
+        this.setState({ error: null })
+        this.logIn(email, password)
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+      .then(() => {
+        setSubmitting(false)
+      })
   }
 
   handleOnFocus = () => {
-    const { onClearErrors } = this.props
-    onClearErrors()
+    this.setState({ error: null })
   }
 
   render() {
-    const { error } = this.props
+    const { error } = this.state
     return (
       <div>
         <Formik
@@ -55,12 +68,12 @@ export default class SignUpForm extends React.Component {
               <EmailField error={error} onFocusInput={this.handleOnFocus} />
               <PasswordField />
               <button
-                className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
+                className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase testButton"
                 data-test="submit"
                 type="submit"
                 disabled={isSubmitting}
               >
-                Sign up
+                {isSubmitting ? 'Signing you up...' : 'Sign up'}
               </button>
             </Form>
           )}

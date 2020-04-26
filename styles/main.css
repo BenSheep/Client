@@ -17,8 +17,25 @@ nav {
 ul li a:hover {
   cursor: pointer;
 }
+
 ul>li:first-of-type>a {
   border-top-right-radius: 1rem;
+}
+
+.testButton {}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .icon-container:hover {
@@ -53,6 +70,13 @@ ul>li:first-of-type>a {
       var(--main-red) 85%,
       var(--main-orange) 100%);
   color: #fff;
+}
+
+.cta-lg:disabled {
+  cursor: default;
+  background-size: 300% 300%;
+  animation: gradient 2.5s ease infinite;
+  opacity: .9;
 }
 
 #landing h1 {
