@@ -5,7 +5,7 @@ import CourseCard from '~/components/CourseCard'
 import AppLayout from '~/components/AppLayout'
 import AddCourseModal from '~/components/forms/AddCourseModal'
 
-import { getCourses } from '~/store/actions/coursesActions'
+import { getCourses, addCourse } from '~/store/actions/coursesActions'
 
 class CoursesPage extends React.Component {
   state = { showModal: false }
@@ -13,12 +13,14 @@ class CoursesPage extends React.Component {
     const { token } = this.props.user
 
     this.props.getCourses(token)
-    this.addCourse = this.addCourse.bind(this)
   }
 
-  addCourse(courseName) {
-    this.setState({ showModal: false })
-    return Promise
+  onAddCourseHandler = courseName => {
+    const { token } = this.props.user
+
+    this.props.addCourse(token, courseName).then(() => {
+      this.setState({ showModal: false })
+    })
   }
 
   render() {
@@ -55,7 +57,9 @@ class CoursesPage extends React.Component {
               ))}
           </div>
           {showModal ? (
-            <AddCourseModal onAddCourse={this.addCourse}></AddCourseModal>
+            <AddCourseModal
+              onAddCourse={this.onAddCourseHandler}
+            ></AddCourseModal>
           ) : null}
         </div>
       </AppLayout>
@@ -72,6 +76,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getCourses,
+  addCourse,
 }
 
 export default connect(

@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 export default class AddCourseModal extends Component {
   handleOnSubmit = (values, { setSubmitting }) => {
+    setSubmitting(true)
     const { courseName } = values
     const { onAddCourse } = this.props
 

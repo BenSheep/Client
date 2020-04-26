@@ -3,7 +3,7 @@ import { logInWithEmailAndPassword, goToCoursesPage } from '../functions'
 const courseName = 'Databases'
 
 describe('Courses page', () => {
-  it('displays a list of user courses', () => {
+  it('Adds a course for a user', () => {
     cy.visit('http://localhost:3000/login')
 
     logInWithEmailAndPassword()
@@ -14,7 +14,7 @@ describe('Courses page', () => {
     checkModalShown()
     fillCourseInformationAndSubmit(courseName)
     checkModalNotShown()
-    // checkNewCourseShown(courseName)
+    checkNewCourseShown(courseName)
   })
 })
 

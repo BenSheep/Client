@@ -74,7 +74,7 @@ export const getCourseByName = (token, name) => dispatch => {
 export const addCourse = (token, courseName) => dispatch => {
   if (token) {
     if (courseName) {
-      const query = `mutationn{
+      const query = `mutation{
         addCourse(name: "${courseName}"){
           name
         }
@@ -91,6 +91,7 @@ export const addCourse = (token, courseName) => dispatch => {
         }
       })
     }
+
     throw new Error('No course name provided')
   }
   throw new Error('No token provided')
