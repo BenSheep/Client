@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 const AppLayout = props => (
-  <div className="h-screen w-full mx-auto flex flex-wrap flex-col lg:flex-row relative ">
+  <div className="lg:h-screen w-full mx-auto flex flex-wrap flex-row ">
     <div className="flex-col w-full lg:w-2/12">
       <nav
         data-test="navbar"

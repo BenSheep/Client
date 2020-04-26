@@ -11,7 +11,9 @@ export const getCourses = token => dispatch => {
         myCourses {
             name,
             schedule {
-                day
+                day,
+                start,
+                end,
             },
             semester,
             grade
