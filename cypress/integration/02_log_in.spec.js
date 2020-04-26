@@ -7,21 +7,25 @@ import {
   WRONG_PASSWORD,
 } from '../messages'
 
-import { logInWithEmailAndPassword } from '../functions'
+import {
+  logInWithEmailAndPassword,
+  stubSuccessfulLogin,
+  stubWrongPasswordLogin,
+  stubUserNotFound,
+} from '../functions'
 describe('Log in', () => {
   it("fails loging a user in until it doesn't", () => {
-    cy.visit('localhost:3000')
+    cy.visit('localhost:3000/login')
 
-    cy.get('[data-test="sign-up-button"]').click()
-
-    cy.get('[data-test="go-to-log-in"]').click()
-
+    stubWrongPasswordLogin()
     tryWrongPassword()
 
+    stubUserNotFound()
     tryNonExistentEmail()
 
     tryNonExistentUsername()
 
+    stubSuccessfulLogin()
     logInWithEmailAndPassword()
   })
 })
