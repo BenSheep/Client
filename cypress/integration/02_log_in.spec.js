@@ -9,7 +9,7 @@ import {
 
 import { logInWithEmailAndPassword } from '../functions'
 describe('Log in', () => {
-  it("fails login a user in until it doesn't", () => {
+  it("fails loging a user in until it doesn't", () => {
     cy.visit('localhost:3000')
 
     cy.get('[data-test="sign-up-button"]').click()

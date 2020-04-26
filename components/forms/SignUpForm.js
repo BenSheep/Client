@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
@@ -25,7 +26,7 @@ export default class SignUpForm extends React.Component {
 
   handleOnSubmit = (values, { setSubmitting }) => {
     const { email, password } = values
-    const { onSignUp } = this.props
+    const { onSignUp, onLogIn, onSuccess } = this.props
 
     onSignUp(email, password)
       .then(res => {
@@ -34,12 +35,17 @@ export default class SignUpForm extends React.Component {
           return
         }
         this.setState({ error: null })
-        this.logIn(email, password)
+        onLogIn(email, password).then(res => {
+          const { token } = res.data.data.login
+          onSuccess(token)
+          Router.push('/app')
+        })
       })
       .catch(error => {
         this.setState({ error })
       })
       .then(() => {
+        console.log('set submitting')
         setSubmitting(false)
       })
   }

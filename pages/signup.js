@@ -1,5 +1,4 @@
 import React from 'react'
-import Router from 'next/router'
 import { connect } from 'react-redux'
 
 import RegisterLayout from '~/components/RegisterLayout'
@@ -24,17 +23,17 @@ class SignUp extends React.Component {
         token
       }
     }`
-    api.post('', { query }).then(res => {
-      const { token } = res.data.data.login
-      this.props.storeToken(token)
-      Router.push('/app')
-    })
+    return api.post('', { query })
   }
 
   render() {
     return (
       <RegisterLayout>
-        <SignUpForm onSignUp={this.signUp} />
+        <SignUpForm
+          onSignUp={this.signUp}
+          onLogIn={this.logIn}
+          onSuccess={token => this.props.storeToken(token)}
+        />
       </RegisterLayout>
     )
   }

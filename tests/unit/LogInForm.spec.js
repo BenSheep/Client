@@ -49,11 +49,7 @@ describe('Log in form', () => {
 
     wrapper.find('[data-test="submit"]').simulate('click')
 
-    expect(logInHandler).toHaveBeenCalledWith(
-      USER_EMAIL,
-      USER_PASSWORD,
-      expect.any(Function)
-    )
+    expect(logInHandler).toHaveBeenCalledWith(USER_EMAIL, USER_PASSWORD)
   })
 
   it('does not fire log in if inputs are empty', () => {
