@@ -50,16 +50,19 @@ export default class AddCourseModal extends Component {
         data-test="add-course-modal"
         className="modal flex justify-center items-center"
       >
-        <div className="w-4/5 md:w-2/5 bg-white pt-4" ref={this.setWrapperRef}>
+        <div
+          className="w-11/12 md:w-3/5 xl:w-2/5 bg-white pt-4"
+          ref={this.setWrapperRef}
+        >
           <Formik
             initialValues={{ courseName: '' }}
             validate={this.validate}
             onSubmit={this.handleOnSubmit}
           >
             {({ isSubmitting }) => (
-              <Form className="w-full text-center pt-12 pb-16">
+              <Form className="h-full md:h-auto w-full text-center pt-12 pb-16 flex flex-wrap align-middle items-center">
                 <Field
-                  className="w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue text-darkgray outline-none pl-4 text-xl"
+                  className="flex flex-row mx-auto w-4/5 rounded-lg py-4 md:py-6 border-2 border-solid border-silver focus:border-blue text-darkgray outline-none pl-4 text-xl"
                   type="text"
                   name="courseName"
                   placeholder="Course name"
@@ -72,7 +75,7 @@ export default class AddCourseModal extends Component {
                   data-test="error-message"
                 />
                 <button
-                  className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
+                  className="flex flex-row mx-auto mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
                   data-test="submit"
                   type="submit"
                   disabled={isSubmitting}
