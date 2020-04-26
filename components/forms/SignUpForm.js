@@ -34,7 +34,6 @@ export default class SignUpForm extends React.Component {
           this.setState({ error: res.data.errors[0] })
           return
         }
-        this.setState({ error: null })
         onLogIn(email, password).then(res => {
           const { token } = res.data.data.login
           onSuccess(token)
@@ -78,7 +77,7 @@ export default class SignUpForm extends React.Component {
                 </p>
               )}
               <button
-                className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase testButton"
+                className="mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
                 data-test="submit"
                 type="submit"
                 disabled={isSubmitting}

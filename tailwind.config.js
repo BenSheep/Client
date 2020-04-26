@@ -19,6 +19,9 @@ module.exports = {
   plugins: [
     plugin(({ addUtilities }) => {
       const newUtilities = {
+        '.min-h-5em': {
+          'min-height': '5em',
+        },
         '.orange-gradient': {
           background: 'linear-gradient(120deg, #ee964b 0%, #f4d35e 100%)',
           transition: 'all .4s ease-out',

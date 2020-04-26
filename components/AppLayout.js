@@ -19,16 +19,8 @@ const AppLayout = props => (
               </a>
             </Link>
           </li>
-          <li className="py-2 text-white text-xl">
-            <a className="p-4 block w-full hover:rounded-md hover:bg-light-blue hover:cursor-pointer">
-              Nani
-            </a>
-          </li>
-          <li className="py-2 text-white text-xl">
-            <a className="p-4 block w-full hover:rounded-md hover:bg-light-blue hover:cursor-pointer">
-              Nani
-            </a>
-          </li>
+          <li className="py-2 text-white text-xl"></li>
+          <li className="py-2 text-white text-xl"></li>
         </ul>
       </nav>
     </div>

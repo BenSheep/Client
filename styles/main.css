@@ -10,19 +10,9 @@
   --main-orange: #ee964b;
 }
 
-nav {
-  min-height: 5em;
-}
-
-ul li a:hover {
-  cursor: pointer;
-}
-
 ul>li:first-of-type>a {
   border-top-right-radius: 1rem;
 }
-
-.testButton {}
 
 @keyframes gradient {
   0% {

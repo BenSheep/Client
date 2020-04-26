@@ -40,7 +40,7 @@ const tryWrongPassword = () => {
 
   cy.get('[data-test="submit"]').click()
 
-  cy.get('[data-test="error-message"]').contains('Password must have at')
+  cy.get('[data-test="error-message"]').contains('Password is incorrect')
 
   cy.get('[data-test="email-username-input"]')
     .focus()

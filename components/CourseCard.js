@@ -57,15 +57,10 @@ const CourseCard = ({ course }) => {
             </p>
           </div>
           {isCollapsed ? (
-            <div
-              className="container w-full flex flex-wrap flex-row mx-auto py-4"
-              data-test="schedule-container"
-            >
-              <CollapsedScheduleContent
-                days={days}
-                schedule={course.schedule}
-              ></CollapsedScheduleContent>
-            </div>
+            <CollapsedScheduleContent
+              days={days}
+              schedule={course.schedule}
+            ></CollapsedScheduleContent>
           ) : null}
         </div>
       </div>
@@ -102,26 +97,33 @@ const createDaysObjects = schedule => {
 }
 
 const CollapsedScheduleContent = props => {
-  return props.days.map(day => (
+  return (
     <div
-      key={day.day}
-      className="mx-4 md:mx-0 py-2 md:py-2 flex-col w-full xl:w-1/5 md:text-center"
+      className="container w-full flex flex-wrap flex-row mx-auto py-4"
+      data-test="schedule-container"
     >
-      <p
-        className={`inline md:block mx-2 md:mx-4 text-xl ${
-          day.hasCourse ? 'text-orange' : 'text-gray'
-        }`}
-        data-test={day.hasCourse ? 'schedule-day' : ''}
-      >
-        {day.day}
-      </p>
-      {day.start && day.end ? (
-        <p className="inline md:block mx-2 md:mx-4 text-lg text-orange">
-          {day.start} - {day.end}
-        </p>
-      ) : null}
+      {props.days.map(day => (
+        <div
+          key={day.day}
+          className="mx-4 md:mx-0 py-2 md:py-2 flex-col w-full xl:w-1/5 md:text-center"
+        >
+          <p
+            className={`inline md:block mx-2 md:mx-4 text-xl ${
+              day.hasCourse ? 'text-orange' : 'text-gray'
+            }`}
+            data-test={day.hasCourse ? 'schedule-day' : ''}
+          >
+            {day.day}
+          </p>
+          {day.start && day.end ? (
+            <p className="inline md:block mx-2 md:mx-4 text-lg text-orange">
+              {day.start} - {day.end}
+            </p>
+          ) : null}
+        </div>
+      ))}
     </div>
-  ))
+  )
 }
 
 /**

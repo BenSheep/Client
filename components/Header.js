@@ -15,7 +15,7 @@ export default class Header extends Component {
   render() {
     const { showBurgerMenuLinks } = this.state
     return (
-      <nav className="relative flex items-center justify-between flex-wrap shadow-lg p-6 lg:pl-12 lg:pr-12">
+      <nav className="min-h-5em relative flex items-center justify-between flex-wrap shadow-lg p-6 lg:pl-12 lg:pr-12">
         <div className="flex items-center flex-shrink-0 mr-6">
           <Link href="/">
             <a>
