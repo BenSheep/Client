@@ -14,18 +14,21 @@ class CourseDetailsPage extends Component {
     return { query }
   }
 
+  // Mocking cache
   componentDidMount() {
     const { courseDetails } = this.props.courses
 
     // check if course is already in the redux store
-
     if (courseDetails) {
+      // if course is already in redux return early (no http request)
       if (courseDetails.name === this.formatName(this.props.query.name)) {
         return
       }
+      // if not delete this course from redux so the new one can be fetched
       this.props.deleteDetailedCourse(courseDetails)
     }
 
+    // fetch course from the API
     const { token } = this.props.user
     const courseName = this.formatName(this.props.query.name)
     this.props.getCourseByName(token, courseName)
@@ -43,20 +46,16 @@ class CourseDetailsPage extends Component {
         {courseDetails ? (
           <div
             data-test="course-detail-card"
-            className="flex flex-wrap flex-col md:flex-row w-4/5 mx-auto text-blue bg-silver rounded-lg p-4 mt-8"
+            className="flex flex-wrap flex-col md:flex-row w-4/5 text-blue mt-8 ml-8"
           >
             <h1
-              className="w-full flex text-xl md:text-4xl mb-8"
+              className="w-full flex text-xl md:text-4xl mb-2"
               data-test="course-name"
             >
               {capitalize(courseDetails.name)} -{' '}
               {formatNumberTh(courseDetails.semester)} semester
             </h1>
-            {courseDetails.grade ? (
-              <CourseGradeComponent
-                grade={courseDetails.grade}
-              ></CourseGradeComponent>
-            ) : null}
+            <AdditionalCourseInfo course={courseDetails}></AdditionalCourseInfo>
           </div>
         ) : (
           <h1>loading...</h1>
@@ -66,20 +65,30 @@ class CourseDetailsPage extends Component {
   }
 }
 
-const CourseGradeComponent = props => (
-  <div className="flex flex-wrap flex-col w-full mx-auto">
+const AdditionalCourseInfo = props => (
+  <div>
     <h3
-      data-test="course-grade-header"
-      className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
+      className="w-full text-md md:text-lg mb-2"
+      data-test="course-professor-header"
     >
-      Grade
+      Professor:{' '}
+      {props.course.professor ? (
+        <span data-test="course-professor" className="ml-2">
+          {props.course.professor}
+        </span>
+      ) : null}
     </h3>
-    <p
-      data-test="course-grade"
-      className="flex mx-auto text-xl md:text-4xl text-blue font-semibold"
+    <h5
+      data-test="course-grade-header"
+      className="flex text-lg md:text-xl text-blue font-semibold"
     >
-      {props.grade}
-    </p>
+      Grade:{' '}
+      {props.course.grade ? (
+        <span data-test="course-grade" className="ml-2">
+          {props.course.grade}
+        </span>
+      ) : null}
+    </h5>
   </div>
 )
 
