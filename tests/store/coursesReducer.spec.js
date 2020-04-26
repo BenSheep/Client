@@ -2,6 +2,7 @@ import coursesReducer from '../../store/reducers/coursesReducer'
 import {
   STORE_COURSES,
   STORE_COURSE_DETAILS,
+  ADD_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
 
@@ -64,6 +65,40 @@ describe('Courses reducer', () => {
       expect(result).toEqual(returnedState)
     })
   })
+  describe('ADD_COURSE', () => {
+    it('Adds a course after creating it using the API', () => {
+      const courses = [
+        {
+          name: 'French  translation',
+          schedule: [
+            {
+              day: 3,
+            },
+          ],
+        },
+        {
+          name: 'Networks',
+          schedule: [],
+        },
+      ]
+      const course = {
+        name: 'Databases',
+      }
+      const state = { courses, courseDetails: null }
+
+      const returnedState = {
+        courses: [...courses, course],
+        courseDetails: null,
+      }
+      const result = coursesReducer(state, {
+        type: ADD_COURSE,
+        course,
+      })
+
+      expect(result).toEqual(returnedState)
+    })
+  })
+
   describe('REMOVE_COURSE_DETAILS', () => {
     it("Removes a course's details", () => {
       const course = {

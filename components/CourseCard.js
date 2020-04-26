@@ -33,7 +33,7 @@ const CourseCard = ({ course }) => {
               data-test="course-name"
               className="w-1/5 hidden md:inline text-xl"
             >
-              {formatNumberTh(course.semester)} semester
+              {course.semester && `${formatNumberTh(course.semester)} semester`}
             </h3>
             <p className="w-4/5 md:w-2/5 md:mx-auto text-xl text-gray">
               {capitalize(course.name)}
