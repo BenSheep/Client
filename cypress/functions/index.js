@@ -1,6 +1,7 @@
 import { USER_EMAIL, USER_PASSWORD } from '../messages'
 
 export const logInWithEmailAndPassword = () => {
+  stubSuccessfulLogin()
   cy.get('[data-test="email-username-input"]')
     .focus()
     .clear()
@@ -17,6 +18,7 @@ export const logInWithEmailAndPassword = () => {
 }
 
 export const goToCoursesPage = () => {
+  stubGetCourses()
   cy.get('[data-test="navbar"]')
 
   cy.get('[data-test="courses-tab-button"]').click()
@@ -26,7 +28,9 @@ export const goToCoursesPage = () => {
   cy.get('[data-test="courses-list"]')
 }
 
-export const goToCourseDetailsPage = index => {
+export const goToCourseDetailsPage = (index, courseName, shouldISeeIt) => {
+  stubGetCourseDetails(courseName, shouldISeeIt)
+
   if (index === 1) {
     cy.get('[data-test="course-card"]')
       .first()

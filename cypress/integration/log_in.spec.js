@@ -9,7 +9,6 @@ import {
 
 import {
   logInWithEmailAndPassword,
-  stubSuccessfulLogin,
   stubWrongPasswordLogin,
   stubUserNotFound,
 } from '../functions'
@@ -25,7 +24,6 @@ describe('Log in', () => {
 
     tryNonExistentUsername()
 
-    stubSuccessfulLogin()
     logInWithEmailAndPassword()
   })
 })

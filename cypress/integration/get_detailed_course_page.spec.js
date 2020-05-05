@@ -3,9 +3,6 @@ import {
   goToCoursesPage,
   goToCourseDetailsPage,
   checkBasicCourseInformation,
-  stubSuccessfulLogin,
-  stubGetCourses,
-  stubGetCourseDetails,
 } from '../functions'
 
 const courseName = 'French translation'
@@ -15,21 +12,16 @@ describe('Courses page', () => {
   it("Displays the details of a user's course", () => {
     cy.visit('http://localhost:3000/login')
 
-    stubSuccessfulLogin()
     logInWithEmailAndPassword()
 
-    stubGetCourses()
     goToCoursesPage()
 
-    stubGetCourseDetails('French translation', false)
-    goToCourseDetailsPage(1, courseName)
+    goToCourseDetailsPage(1, courseName, false)
     checkBasicCourseInformation(courseName, false)
 
-    stubGetCourses()
     goToCoursesPage()
 
-    stubGetCourseDetails('Networks', true)
-    goToCourseDetailsPage(2, otherCourseName)
+    goToCourseDetailsPage(2, otherCourseName, true)
 
     checkBasicCourseInformation(otherCourseName, true)
     checkAdditionalCourseInformation()
