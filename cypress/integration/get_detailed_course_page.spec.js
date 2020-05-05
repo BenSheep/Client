@@ -5,8 +5,7 @@ import {
   checkBasicCourseInformation,
 } from '../functions'
 
-const courseName = 'French translation'
-const otherCourseName = 'Networks'
+import { FIRST_COURSE_NAME, OTHER_COURSE_NAME } from '../messages'
 
 describe('Courses page', () => {
   it("Displays the details of a user's course", () => {
@@ -16,14 +15,14 @@ describe('Courses page', () => {
 
     goToCoursesPage()
 
-    goToCourseDetailsPage(1, courseName, false)
-    checkBasicCourseInformation(courseName, false)
+    goToCourseDetailsPage(1, FIRST_COURSE_NAME, false)
+    checkBasicCourseInformation(FIRST_COURSE_NAME, false)
 
     goToCoursesPage()
 
-    goToCourseDetailsPage(2, otherCourseName, true)
+    goToCourseDetailsPage(2, OTHER_COURSE_NAME, true)
 
-    checkBasicCourseInformation(otherCourseName, true)
+    checkBasicCourseInformation(OTHER_COURSE_NAME, true)
     checkAdditionalCourseInformation()
   })
 })
