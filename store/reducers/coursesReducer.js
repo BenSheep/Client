@@ -4,7 +4,7 @@ import {
   ADD_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
-const initialState = { courses: null, courseDetails: null }
+const initialState = { courses: [], courseDetails: null }
 
 export default function coursesReducer(state = initialState, action) {
   switch (action.type) {
@@ -26,7 +26,13 @@ export default function coursesReducer(state = initialState, action) {
     }
     case ADD_COURSE: {
       const { course } = action
-      const newCourses = [...state.courses, course]
+      let newCourses
+
+      if (state.courses) {
+        newCourses = [...state.courses, course]
+      } else {
+        newCourses = [course]
+      }
 
       return { ...state, courses: newCourses }
     }

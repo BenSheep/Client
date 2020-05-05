@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "lint": "eslint components pages store cypress/integration tests",
+    "lint": "eslint components pages store cypress/integration cypress/functions tests",
     "e2e": "cypress open",
     "test": "jest tests --silent",
-    "fix": "eslint --fix components pages store",
+    "fix": "eslint --fix cypress/integrations components pages store",
     "build": "next build",
     "start": "next start"
   },

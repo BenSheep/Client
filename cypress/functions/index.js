@@ -24,11 +24,9 @@ export const goToCoursesPage = () => {
   cy.get('[data-test="courses-header"]').contains('My Courses')
 
   cy.get('[data-test="courses-list"]')
-    .children()
-    .should('have.length', 2)
 }
 
-export const goToCourseDetailsPage = (index, courseName) => {
+export const goToCourseDetailsPage = index => {
   if (index === 1) {
     cy.get('[data-test="course-card"]')
       .first()
@@ -52,4 +50,145 @@ export const checkBasicCourseInformation = (courseName, shouldISeeIt) => {
   } else {
     cy.get('[data-test="course-grade"]').should('not.be.visible')
   }
+}
+
+export const stubSuccessfulLogin = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        login: {
+          token: 'somerandomjwttoken',
+        },
+      },
+    },
+  })
+}
+
+export const stubSuccessfulSignup = email => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        register: {
+          email,
+        },
+        login: {
+          token: 'sometoken',
+        },
+      },
+    },
+  })
+}
+
+export const stubWrongPasswordLogin = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: [
+        {
+          error: 'INCORRECT_PASSWORD',
+          message: 'Password is incorrect',
+          status: 401,
+        },
+      ],
+      data: null,
+    },
+  })
+}
+
+export const stubUserNotFound = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: [
+        {
+          error: 'USER_DOES_NOT_EXIST',
+          message: 'We did not find a user matching these credentials',
+          status: 404,
+        },
+      ],
+      data: null,
+    },
+  })
+}
+
+export const stubDuplicateEmail = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: [
+        {
+          error: 'DUPLICATE_EMAIL',
+          message: 'This email is already in use',
+          status: 409,
+        },
+      ],
+      data: null,
+    },
+  })
+}
+
+export const stubGetCourses = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        myCourses: [
+          {
+            name: 'French translation',
+            schedule: [
+              {
+                day: 3,
+              },
+            ],
+          },
+          {
+            name: 'Networks',
+            schedule: [],
+          },
+        ],
+      },
+    },
+  })
+}
+
+export const stubGetCourseDetails = (courseName, hasGrade) => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        course: {
+          name: courseName,
+          schedule: [
+            {
+              day: 3,
+              start: 540,
+              end: 660,
+            },
+          ],
+          professor: 'Mr. Prof',
+          grade: hasGrade ? 9 : null,
+        },
+      },
+    },
+  })
 }

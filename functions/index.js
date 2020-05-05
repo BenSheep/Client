@@ -3,15 +3,17 @@ export const capitalize = name => {
 }
 
 export const formatNumberTh = number => {
-  const lastDigit = number.toString().charAt(0)
-  switch (lastDigit) {
-    case '1':
-      return `${number}st`
-    case '2':
-      return `${number}nd`
-    case '3':
-      return `${number}rd`
-    default:
-      return `${number}th`
+  if (number) {
+    const lastDigit = number.toString().charAt(0)
+    switch (lastDigit) {
+      case '1':
+        return `${number}st`
+      case '2':
+        return `${number}nd`
+      case '3':
+        return `${number}rd`
+      default:
+        return `${number}th`
+    }
   }
 }

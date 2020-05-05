@@ -1,4 +1,8 @@
-import { logInWithEmailAndPassword, goToCoursesPage } from '../functions'
+import {
+  logInWithEmailAndPassword,
+  goToCoursesPage,
+  stubSuccessfulLogin,
+} from '../functions'
 
 const courseName = 'Databases'
 
@@ -6,15 +10,16 @@ describe('Courses page', () => {
   it('Adds a course for a user', () => {
     cy.visit('http://localhost:3000/login')
 
+    stubSuccessfulLogin()
     logInWithEmailAndPassword()
     goToCoursesPage()
-    stubAddCourse()
     checkModalNotShown()
     openAddCourseModal()
     checkModalShown()
     checkModalClosesOnClickOutside()
     openAddCourseModal()
     attemptSubmitWithoutCourseName()
+    stubAddCourse()
     fillCourseInformationAndSubmit(courseName)
     checkModalNotShown()
     checkNewCourseShown(courseName)

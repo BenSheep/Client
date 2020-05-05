@@ -4,6 +4,9 @@ import {
   BAD_PASSWORD,
   TAKEN_EMAIL,
 } from '../messages'
+
+import { stubDuplicateEmail, stubSuccessfulSignup } from '../functions'
+
 describe('Sign up', () => {
   it("fails registering a user until it doesn't", () => {
     cy.visit('localhost:3000')
@@ -12,8 +15,10 @@ describe('Sign up', () => {
 
     tryBadPassword()
 
+    stubDuplicateEmail()
     tryTakenEmail()
 
+    stubSuccessfulSignup(USER_EMAIL)
     signUp()
 
     cy.get('[data-test="navbar"]')

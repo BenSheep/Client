@@ -1,11 +1,19 @@
-import { logInWithEmailAndPassword } from '../functions'
+import {
+  logInWithEmailAndPassword,
+  stubSuccessfulLogin,
+  stubGetCourses,
+} from '../functions'
 
 describe('Course page', () => {
   it('displays a list of user courses', () => {
     cy.visit('http://localhost:3000/login')
 
+    stubSuccessfulLogin()
     logInWithEmailAndPassword()
+
+    stubGetCourses()
     goToCoursesPageAndFindTwo()
+
     collapseCourseCardAndSeeSchedule()
   })
 })
