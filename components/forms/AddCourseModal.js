@@ -75,7 +75,7 @@ export default class AddCourseModal extends Component {
                   data-test="error-message"
                 />
                 <button
-                  className="flex flex-row mx-auto mt-12 md:py-6 w-4/5 cta-lg text-xl uppercase"
+                  className="flex flex-row mx-auto mt-12 md:py-6 w-4/5 justify-center text-xl text-white uppercase orange-gradient"
                   data-test="submit"
                   type="submit"
                   disabled={isSubmitting}

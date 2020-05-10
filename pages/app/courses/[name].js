@@ -126,6 +126,13 @@ class CourseDetailsPage extends Component {
             data-test="course-detail-card"
             className="flex flex-wrap flex-col md:flex-row w-4/5 text-blue mt-8 ml-8"
           >
+            <h1
+              className="inline w-full md:w-10/12 flex text-xl md:text-4xl mb-2"
+              data-test="course-name"
+            >
+              {capitalize(courseDetails.name)} -{' '}
+              {formatNumberTh(courseDetails.semester)} semester
+            </h1>
             {this.state.delete ? (
               <VerifyDeleteAlert
                 course={courseDetails.name}
@@ -133,15 +140,15 @@ class CourseDetailsPage extends Component {
               ></VerifyDeleteAlert>
             ) : null}
             {!edit ? (
-              <div>
+              <div className="flex w-full md:w-2/12 float-right justify-center align-middle">
                 <img
-                  className="inline mr-4 cursor-pointer"
+                  className="inline mr-4 object-contain cursor-pointer"
                   src="/icons/edit.png"
                   data-test="edit-course-button"
                   onClick={() => this.setState({ edit: !edit })}
                 />
                 <img
-                  className="inline cursor-pointer text-red"
+                  className="inline object-contain cursor-pointer"
                   src="/icons/delete.png"
                   data-test="delete-course-button"
                   onClick={() => this.setState({ delete: !this.state.delete })}
@@ -155,13 +162,6 @@ class CourseDetailsPage extends Component {
                 onClick={() => this.onSaveHandler()}
               />
             )}
-            <h1
-              className="w-full flex text-xl md:text-4xl mb-2"
-              data-test="course-name"
-            >
-              {capitalize(courseDetails.name)} -{' '}
-              {formatNumberTh(courseDetails.semester)} semester
-            </h1>
             <AdditionalCourseInfo
               course={courseDetails}
               edit={edit}

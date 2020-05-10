@@ -127,7 +127,7 @@ export const updateCourseDetails = (token, newCourse) => dispatch => {
       })
     }
 
-    throw new Error('No course details provided')
+    return
   }
 
   throw new Error('No token provided')
