@@ -14,6 +14,7 @@ import {
 } from '../functions'
 describe('Log in', () => {
   it("fails loging a user in until it doesn't", () => {
+    cy.visit('http://localhost:3000/login')
     stubWrongPasswordLogin()
     tryWrongPassword()
 
