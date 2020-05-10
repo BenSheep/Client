@@ -124,7 +124,7 @@ class CourseDetailsPage extends Component {
         {courseDetails ? (
           <div
             data-test="course-detail-card"
-            className="flex flex-wrap flex-col md:flex-row w-4/5 text-blue mt-8 ml-8"
+            className="flex flex-wrap flex-col md:flex-row w-full md:w-4/5 md:mt-6 md:ml-8 pt-4 md:pt-0 text-blue"
           >
             <h1
               className="inline w-full md:w-10/12 flex text-xl md:text-4xl mb-2"
@@ -140,9 +140,9 @@ class CourseDetailsPage extends Component {
               ></VerifyDeleteAlert>
             ) : null}
             {!edit ? (
-              <div className="flex w-full md:w-2/12 float-right justify-center align-middle">
+              <div className="flex w-full md:w-2/12 float-right md:justify-center align-middle">
                 <img
-                  className="inline mr-4 object-contain cursor-pointer"
+                  className="inline mr-2 md:mr-4 object-contain cursor-pointer"
                   src="/icons/edit.png"
                   data-test="edit-course-button"
                   onClick={() => this.setState({ edit: !edit })}
@@ -155,7 +155,7 @@ class CourseDetailsPage extends Component {
                 />
               </div>
             ) : (
-              <div className="flex w-full md:w-2/12 float-right justify-center align-middle">
+              <div className="flex w-full md:w-2/12 float-right md:justify-center align-middle">
                 <img
                   className="inline object-contain cursor-pointer"
                   src="/icons/check.png"
@@ -199,9 +199,9 @@ const AdditionalCourseInfo = props => {
   }
 
   return (
-    <div className="flex flex-row md:flex-col w-full mt-4">
-      <div className="flex flex-row my-2">
-        <div className="flex flex-col w-1/6">
+    <div className="flex flex-col w-full mt-4">
+      <div className="flex flex-col w-full my-2">
+        <div className="flex flex-col w-full md:w-1/6">
           <h3
             className=" w-full text-md text-lg md:text-xl mb-2"
             data-test="course-professor-header"
@@ -209,7 +209,7 @@ const AdditionalCourseInfo = props => {
             Professor:{' '}
           </h3>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full md:w-auto">
           {props.course.professor || !props.edit ? (
             <span data-test="course-professor">{props.course.professor}</span>
           ) : (
@@ -223,11 +223,11 @@ const AdditionalCourseInfo = props => {
           )}
         </div>
       </div>
-      <div className="flex flex-row my-2">
-        <div className="flex flex-col w-1/6">
+      <div className="flex flex-col w-full my-2">
+        <div className="flex flex-col w-full md:w-1/6">
           <h3
             data-test="course-grade-header"
-            className="flex text-lg md:text-xl text-blue"
+            className="flex mb-2 text-lg md:text-xl text-blue"
           >
             Grade:{' '}
           </h3>
@@ -270,11 +270,11 @@ const ScheduleRow = props => {
   return (
     <div className="flex flex-row mt-2">
       {props.edit ? (
-        <div className="flex flex-row w-full">
-          <div className="flex flex-col w-1/6">
+        <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full md:w-1/6">
             <select
               data-test="schedule-day-dropdown"
-              className="mr-4 text-xl text-blue bg-white h-10"
+              className="mb-2 text-xl text-blue bg-white h-10"
               defaultValue={days[props.schedule.day]}
             >
               {days.map(day => (
@@ -284,7 +284,7 @@ const ScheduleRow = props => {
               ))}
             </select>
           </div>
-          <div>
+          <div className="mx-auto pb-4">
             <input
               className="mr-4 h-10"
               data-test="schedule-start-time-input"
@@ -300,9 +300,10 @@ const ScheduleRow = props => {
                   props.schedule.day
                 )
               }}
-            />
+            />{' '}
+            -
             <input
-              className="h-10"
+              className="ml-4 h-10"
               data-test="schedule-end-time-input"
               type="time"
               min={startTime}
@@ -320,8 +321,8 @@ const ScheduleRow = props => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-row w-full">
-          <div className="flex flex-col w-1/6">
+        <div className="flex flex-row w-full pb-4 md:pb-0">
+          <div className="flex flex-col w-full md:w-1/6">
             <h5
               data-test="schedule-day"
               className="inline mr-4 text-xl text-blue"
@@ -329,7 +330,7 @@ const ScheduleRow = props => {
               {days[props.schedule.day]}:
             </h5>
           </div>
-          <div className="flex flex-row w-1/6">
+          <div className="flex flex-row w-full md:w-1/6">
             <p
               className="inline mr-4 text-xl text-orange"
               data-test="schedule-start-time"

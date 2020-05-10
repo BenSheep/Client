@@ -8,7 +8,7 @@ const RegisterLayout = props => (
         <a>Study</a>
       </Link>
     </h1>
-    <div className="mx-auto w-11/12 md:w-4/5 lg:w-2/5  justify-center items-center mt-12 shadow-2xl bg-white">
+    <div className="mx-auto w-11/12 md:w-4/5 lg:w-2/5  justify-center items-center mt-12 md:shadow-2xl md:bg-white">
       {props.children}
     </div>
   </div>
