@@ -3,10 +3,12 @@ import {
   getCourseByName,
   addCourse,
   updateCourseDetails,
+  deleteCourse,
   deleteDetailedCourse,
   STORE_COURSES,
   STORE_COURSE_DETAILS,
   ADD_COURSE,
+  REMOVE_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
 
@@ -143,6 +145,24 @@ describe('Courses actions', () => {
           }
         )
       })
+    it("Deletes a course from user's list", () => {
+      const dispatch = jest.fn()
+
+      api.post.mockResolvedValue({
+        data: {
+          errors: null,
+          data: {
+            deleteCourse,
+          },
+        },
+      })
+      return deleteCourse('token', course)(dispatch).then(() => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: REMOVE_COURSE,
+          course,
+        })
+      })
+    })
     it("deletes a course's details from the store", () => {
       const expectedAction = {
         type: REMOVE_COURSE_DETAILS,

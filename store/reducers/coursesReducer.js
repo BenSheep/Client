@@ -2,6 +2,7 @@ import {
   STORE_COURSES,
   STORE_COURSE_DETAILS,
   ADD_COURSE,
+  REMOVE_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
 const initialState = { courses: [], courseDetails: null }
@@ -36,6 +37,13 @@ export default function coursesReducer(state = initialState, action) {
 
       return { ...state, courses: newCourses }
     }
+    case REMOVE_COURSE:
+      return {
+        ...state,
+        courses: state.courses.filter(
+          course => course.name !== action.course.name
+        ),
+      }
     case REMOVE_COURSE_DETAILS:
       return { ...state, courseDetails: null }
     default:

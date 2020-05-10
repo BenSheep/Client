@@ -16,13 +16,14 @@ describe('Courses page', () => {
 
     pressDeleteNoVerify()
 
+    stubDeleteCourse()
     pressDeleteVerify()
 
-    goToCoursesPage()
+    goToCoursesPage(true)
 
-    // cy.get('[data-test="course-card"]')
-    //   .contains(FIRST_COURSE_NAME)
-    //   .should('not.exist')
+    cy.get('[data-test="course-card"]')
+      .contains(FIRST_COURSE_NAME)
+      .should('not.exist')
   })
 })
 
@@ -40,4 +41,18 @@ const pressDeleteVerify = () => {
   cy.get('[data-test="yes-button"]').click()
 
   cy.get('[data-test="verify-alert-box"]').should('not.be.visible')
+}
+
+const stubDeleteCourse = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        deleteCourse: {},
+      },
+    },
+  })
 }

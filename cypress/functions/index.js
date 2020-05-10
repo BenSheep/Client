@@ -18,8 +18,8 @@ export const logInWithEmailAndPassword = () => {
   cy.get('[data-test="navbar"]')
 }
 
-export const goToCoursesPage = () => {
-  stubGetCourses()
+export const goToCoursesPage = (isAfterDelete = false) => {
+  stubGetCourses(isAfterDelete)
   cy.get('[data-test="navbar"]')
 
   cy.get('[data-test="courses-tab-button"]').click()
@@ -146,7 +146,24 @@ export const stubDuplicateEmail = () => {
   })
 }
 
-export const stubGetCourses = () => {
+export const stubGetCourses = isAfterDelete => {
+  const courses = [
+    {
+      name: 'French translation',
+      schedule: [
+        {
+          day: 3,
+        },
+      ],
+    },
+    {
+      name: 'Networks',
+      schedule: [],
+    },
+  ]
+
+  if (isAfterDelete) courses.splice(0, 1)
+
   cy.server()
   cy.route({
     method: 'POST',
@@ -154,20 +171,7 @@ export const stubGetCourses = () => {
     response: {
       errors: null,
       data: {
-        myCourses: [
-          {
-            name: 'French translation',
-            schedule: [
-              {
-                day: 3,
-              },
-            ],
-          },
-          {
-            name: 'Networks',
-            schedule: [],
-          },
-        ],
+        myCourses: courses,
       },
     },
   })

@@ -6,6 +6,7 @@ export const STORE_COURSE_DETAILS = 'STORE_COURSE_DETAILS'
 
 export const ADD_COURSE = 'ADD_COURSE'
 
+export const REMOVE_COURSE = 'REMOVE_COURSE'
 export const REMOVE_COURSE_DETAILS = 'REMOVE_COURSE_DETAILS'
 
 export const getCourses = token => dispatch => {
@@ -127,6 +128,32 @@ export const updateCourseDetails = (token, newCourse) => dispatch => {
     }
 
     throw new Error('No course details provided')
+  }
+
+  throw new Error('No token provided')
+}
+
+export const deleteCourse = (token, course) => dispatch => {
+  if (token) {
+    if (course) {
+      const query = `mutation{
+        deleteCourse(name: "${course.name}"){
+
+        }
+      }`
+
+      return api.post('', { query }, createHeaders(token)).then(res => {
+        console.log(res.data)
+        if (!res.data.errors) {
+          dispatch({
+            type: REMOVE_COURSE,
+            course,
+          })
+        }
+      })
+    }
+
+    throw new Error('No course provided')
   }
 
   throw new Error('No token provided')

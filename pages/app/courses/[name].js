@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import AppLayout from '~/components/AppLayout'
 import {
   getCourseByName,
-  deleteDetailedCourse,
   updateCourseDetails,
+  deleteCourse,
+  deleteDetailedCourse,
 } from '~/store/actions/coursesActions'
 
 import {
@@ -107,6 +108,11 @@ class CourseDetailsPage extends Component {
 
   onAlertClickHandler = answer => {
     this.setState({ delete: !this.state.delete })
+
+    if (answer) {
+      const { token } = this.props.user
+      this.props.deleteCourse(token, this.props.courses.courseDetails)
+    }
   }
 
   render() {
@@ -338,7 +344,7 @@ const VerifyDeleteAlert = props => {
             <button
               data-test="no-button"
               className=" mx-auto w-1/2 bg-red p-4"
-              onClick={() => onClickButtonHandler(true)}
+              onClick={() => onClickButtonHandler(false)}
             >
               No
             </button>
@@ -347,7 +353,7 @@ const VerifyDeleteAlert = props => {
             <button
               data-test="yes-button"
               className=" mx-auto w-1/2 bg-green p-4"
-              onClick={() => onClickButtonHandler(false)}
+              onClick={() => onClickButtonHandler(true)}
             >
               Yes
             </button>
@@ -368,6 +374,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getCourseByName,
   updateCourseDetails,
+  deleteCourse,
   deleteDetailedCourse,
 }
 
