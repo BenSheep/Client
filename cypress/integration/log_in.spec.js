@@ -9,14 +9,12 @@ import {
 
 import {
   logInWithEmailAndPassword,
-  stubSuccessfulLogin,
   stubWrongPasswordLogin,
   stubUserNotFound,
 } from '../functions'
 describe('Log in', () => {
   it("fails loging a user in until it doesn't", () => {
-    cy.visit('localhost:3000/login')
-
+    cy.visit('http://localhost:3000/login')
     stubWrongPasswordLogin()
     tryWrongPassword()
 
@@ -25,7 +23,6 @@ describe('Log in', () => {
 
     tryNonExistentUsername()
 
-    stubSuccessfulLogin()
     logInWithEmailAndPassword()
   })
 })

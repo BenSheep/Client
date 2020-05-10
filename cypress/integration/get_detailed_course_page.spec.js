@@ -3,35 +3,24 @@ import {
   goToCoursesPage,
   goToCourseDetailsPage,
   checkBasicCourseInformation,
-  stubSuccessfulLogin,
-  stubGetCourses,
-  stubGetCourseDetails,
 } from '../functions'
 
-const courseName = 'French translation'
-const otherCourseName = 'Networks'
+import { FIRST_COURSE_NAME, OTHER_COURSE_NAME } from '../messages'
 
 describe('Courses page', () => {
   it("Displays the details of a user's course", () => {
-    cy.visit('http://localhost:3000/login')
-
-    stubSuccessfulLogin()
     logInWithEmailAndPassword()
 
-    stubGetCourses()
     goToCoursesPage()
 
-    stubGetCourseDetails('French translation', false)
-    goToCourseDetailsPage(1, courseName)
-    checkBasicCourseInformation(courseName, false)
+    goToCourseDetailsPage(1, FIRST_COURSE_NAME, false)
+    checkBasicCourseInformation(FIRST_COURSE_NAME, false)
 
-    stubGetCourses()
     goToCoursesPage()
 
-    stubGetCourseDetails('Networks', true)
-    goToCourseDetailsPage(2, otherCourseName)
+    goToCourseDetailsPage(2, OTHER_COURSE_NAME, true)
 
-    checkBasicCourseInformation(otherCourseName, true)
+    checkBasicCourseInformation(OTHER_COURSE_NAME, true)
     checkAdditionalCourseInformation()
   })
 })

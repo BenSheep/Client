@@ -6,3 +6,6 @@ export const WRONG_PASSWORD = 'notherightpass123'
 export const TAKEN_EMAIL = 'user@email.com'
 export const NON_EXISTENT_EMAIL = 'nonexisten@email.com'
 export const NON_EXISTENT_USERNAME = 'nonexistenusername'
+
+export const FIRST_COURSE_NAME = 'French translation'
+export const OTHER_COURSE_NAME = 'Networks'

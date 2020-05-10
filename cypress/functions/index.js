@@ -1,6 +1,8 @@
 import { USER_EMAIL, USER_PASSWORD } from '../messages'
 
 export const logInWithEmailAndPassword = () => {
+  cy.visit('http://localhost:3000/login')
+  stubSuccessfulLogin()
   cy.get('[data-test="email-username-input"]')
     .focus()
     .clear()
@@ -16,7 +18,8 @@ export const logInWithEmailAndPassword = () => {
   cy.get('[data-test="navbar"]')
 }
 
-export const goToCoursesPage = () => {
+export const goToCoursesPage = (isAfterDelete = false) => {
+  stubGetCourses(isAfterDelete)
   cy.get('[data-test="navbar"]')
 
   cy.get('[data-test="courses-tab-button"]').click()
@@ -26,7 +29,9 @@ export const goToCoursesPage = () => {
   cy.get('[data-test="courses-list"]')
 }
 
-export const goToCourseDetailsPage = index => {
+export const goToCourseDetailsPage = (index, courseName, shouldISeeIt) => {
+  stubGetCourseDetails(courseName, shouldISeeIt)
+
   if (index === 1) {
     cy.get('[data-test="course-card"]')
       .first()
@@ -141,7 +146,24 @@ export const stubDuplicateEmail = () => {
   })
 }
 
-export const stubGetCourses = () => {
+export const stubGetCourses = isAfterDelete => {
+  const courses = [
+    {
+      name: 'French translation',
+      schedule: [
+        {
+          day: 3,
+        },
+      ],
+    },
+    {
+      name: 'Networks',
+      schedule: [],
+    },
+  ]
+
+  if (isAfterDelete) courses.splice(0, 1)
+
   cy.server()
   cy.route({
     method: 'POST',
@@ -149,20 +171,7 @@ export const stubGetCourses = () => {
     response: {
       errors: null,
       data: {
-        myCourses: [
-          {
-            name: 'French translation',
-            schedule: [
-              {
-                day: 3,
-              },
-            ],
-          },
-          {
-            name: 'Networks',
-            schedule: [],
-          },
-        ],
+        myCourses: courses,
       },
     },
   })
