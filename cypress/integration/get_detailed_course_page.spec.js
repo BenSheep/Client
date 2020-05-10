@@ -9,8 +9,6 @@ import { FIRST_COURSE_NAME, OTHER_COURSE_NAME } from '../messages'
 
 describe('Courses page', () => {
   it("Displays the details of a user's course", () => {
-    cy.visit('http://localhost:3000/login')
-
     logInWithEmailAndPassword()
 
     goToCoursesPage()

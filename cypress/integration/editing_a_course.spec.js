@@ -10,8 +10,6 @@ const COURSE_GRADE = 8
 
 describe('Courses page', () => {
   it('Edits the information of a course', () => {
-    cy.visit('http://localhost:3000/login')
-
     logInWithEmailAndPassword()
 
     goToCoursesPage()

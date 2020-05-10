@@ -18,7 +18,7 @@ import {
 } from '~/functions'
 
 class CourseDetailsPage extends Component {
-  state = { edit: false }
+  state = { edit: false, delete: false }
   // get the url query
   static getInitialProps({ query }) {
     return { query }
@@ -105,6 +105,10 @@ class CourseDetailsPage extends Component {
     return { courseDetails, key, val }
   }
 
+  onAlertClickHandler = answer => {
+    this.setState({ delete: !this.state.delete })
+  }
+
   render() {
     const { courseDetails } = this.props.courses
     const { edit } = this.state
@@ -116,13 +120,27 @@ class CourseDetailsPage extends Component {
             data-test="course-detail-card"
             className="flex flex-wrap flex-col md:flex-row w-4/5 text-blue mt-8 ml-8"
           >
+            {this.state.delete ? (
+              <VerifyDeleteAlert
+                course={courseDetails.name}
+                onclick={this.onAlertClickHandler}
+              ></VerifyDeleteAlert>
+            ) : null}
             {!edit ? (
-              <img
-                className="cursor-pointer"
-                src="/icons/edit.png"
-                data-test="edit-course-button"
-                onClick={() => this.setState({ edit: !edit })}
-              />
+              <div>
+                <img
+                  className="inline mr-4 cursor-pointer"
+                  src="/icons/edit.png"
+                  data-test="edit-course-button"
+                  onClick={() => this.setState({ edit: !edit })}
+                />
+                <img
+                  className="inline cursor-pointer text-red"
+                  src="/icons/delete.png"
+                  data-test="delete-course-button"
+                  onClick={() => this.setState({ delete: !this.state.delete })}
+                />
+              </div>
             ) : (
               <img
                 className="cursor-pointer"
@@ -297,6 +315,45 @@ const ScheduleRow = props => {
           </p>
         </div>
       )}
+    </div>
+  )
+}
+
+const VerifyDeleteAlert = props => {
+  const onClickButtonHandler = answer => {
+    props.onclick(answer)
+  }
+  return (
+    <div
+      data-test="verify-alert-box"
+      className="modal flex justify-center items-center"
+    >
+      <div className="w-11/12 md:w-3/5 xl:w-2/5 bg-white pt-12 text-center">
+        <h3 className="text-xl text-blue">
+          Are you sure you want to delete <b>{props.course}</b> ?
+        </h3>
+        <p className="text-md text-gray">This action cannot be undone</p>
+        <div className="mt-8 pb-12 flex flex-row text-white">
+          <div className="flex-col w-1/2">
+            <button
+              data-test="no-button"
+              className=" mx-auto w-1/2 bg-red p-4"
+              onClick={() => onClickButtonHandler(true)}
+            >
+              No
+            </button>
+          </div>
+          <div className="flex-col w-1/2">
+            <button
+              data-test="yes-button"
+              className=" mx-auto w-1/2 bg-green p-4"
+              onClick={() => onClickButtonHandler(false)}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

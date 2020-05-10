@@ -1,6 +1,7 @@
 import { USER_EMAIL, USER_PASSWORD } from '../messages'
 
 export const logInWithEmailAndPassword = () => {
+  cy.visit('http://localhost:3000/login')
   stubSuccessfulLogin()
   cy.get('[data-test="email-username-input"]')
     .focus()

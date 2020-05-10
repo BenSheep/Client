@@ -4,8 +4,6 @@ const courseName = 'Databases'
 
 describe('Courses page', () => {
   it('Adds a course for a user', () => {
-    cy.visit('http://localhost:3000/login')
-
     logInWithEmailAndPassword()
     goToCoursesPage()
     checkModalNotShown()
