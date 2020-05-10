@@ -5,12 +5,16 @@ import AppLayout from '~/components/AppLayout'
 import {
   getCourseByName,
   deleteDetailedCourse,
+  updateCourseDetails,
 } from '~/store/actions/coursesActions'
+
 import {
+  compareStrings,
   capitalize,
   formatNumberTh,
   getDays,
   minutesTo24Hours,
+  hoursToMinutes,
 } from '~/functions'
 
 class CourseDetailsPage extends Component {
@@ -27,7 +31,12 @@ class CourseDetailsPage extends Component {
     // check if course is already in the redux store
     if (courseDetails) {
       // if course is already in redux return early (no http request)
-      if (courseDetails.name === this.formatName(this.props.query.name)) {
+      if (
+        compareStrings(
+          courseDetails.name,
+          this.formatName(this.props.query.name)
+        )
+      ) {
         return
       }
       // if not delete this course from redux so the new one can be fetched
@@ -48,7 +57,49 @@ class CourseDetailsPage extends Component {
   onSaveHandler = () => {
     this.setState({ edit: false })
 
-    // updateCourse
+    const { token } = this.props.user
+
+    this.props.updateCourseDetails(token, this.state.course)
+  }
+
+  onChangeHandler = newVal => {
+    const { courseDetails } = this.props.courses
+
+    const key = Object.keys(newVal)[0]
+    const val = Object.values(newVal)[0]
+
+    this.setState(state => ({
+      course: {
+        ...state.course,
+        ...courseDetails,
+        [key]: val,
+      },
+    }))
+  }
+
+  onScheduleChangeHandler = (newVal, day) => {
+    const { courseDetails } = this.props.courses
+
+    const key = Object.keys(newVal)[0]
+    const val = Object.values(newVal)[0]
+
+    const index = this.state.course.schedule.findIndex(
+      sched => sched.day === day
+    )
+
+    const newSchedule = [...this.state.course.schedule]
+    newSchedule[index] = {
+      ...newSchedule[index],
+      [key]: val,
+    }
+
+    this.setState(state => ({
+      course: {
+        ...state.course,
+        ...courseDetails,
+        schedule: newSchedule,
+      },
+    }))
   }
 
   render() {
@@ -87,6 +138,8 @@ class CourseDetailsPage extends Component {
             <AdditionalCourseInfo
               course={courseDetails}
               edit={edit}
+              onchange={this.onChangeHandler}
+              onScheduleChange={this.onScheduleChangeHandler}
             ></AdditionalCourseInfo>
           </div>
         ) : (
@@ -97,49 +150,76 @@ class CourseDetailsPage extends Component {
   }
 }
 
-const AdditionalCourseInfo = props => (
-  <div>
-    <h3
-      className="w-full text-md md:text-lg mb-2"
-      data-test="course-professor-header"
-    >
-      Professor:{' '}
-      {props.course.professor && !props.edit ? (
-        <span data-test="course-professor" className="ml-2">
-          {props.course.professor}
-        </span>
-      ) : (
-        <input
-          data-test="professor-name-input"
-          className="ml-2 px-2 border-2"
-          type="text"
-          placeholder={props.course.professor}
+const AdditionalCourseInfo = props => {
+  const onChangeHandler = (e, prop) => {
+    const newValue = e.target.value
+
+    // strong type string or integer
+    props.onchange({ [prop]: isNaN(newValue) ? newValue : parseInt(newValue) })
+  }
+
+  const onScheduleChangeHandler = (key, val, day) => {
+    if (val === '') return
+
+    props.onScheduleChange(
+      {
+        [key]: hoursToMinutes(val),
+      },
+      day
+    )
+  }
+
+  return (
+    <div>
+      <h3
+        className="w-full text-md md:text-lg mb-2"
+        data-test="course-professor-header"
+      >
+        Professor:{' '}
+        {props.course.professor && !props.edit ? (
+          <span data-test="course-professor" className="ml-2">
+            {props.course.professor}
+          </span>
+        ) : (
+          <input
+            data-test="professor-name-input"
+            className="ml-2 px-2 border-2"
+            type="text"
+            placeholder={props.course.professor}
+            onChange={e => onChangeHandler(e, 'professor')}
+          />
+        )}
+      </h3>
+      <h5
+        data-test="course-grade-header"
+        className="flex text-lg md:text-xl text-blue font-semibold"
+      >
+        Grade:{' '}
+        {props.course.grade && !props.edit ? (
+          <span data-test="course-grade" className="ml-2">
+            {props.course.grade}
+          </span>
+        ) : (
+          <input
+            data-test="grade-input"
+            className="ml-2 px-2 border-2"
+            type="number"
+            placeholder={props.course.grade}
+            onChange={e => onChangeHandler(e, 'grade')}
+          />
+        )}
+      </h5>
+      {props.course.schedule.map(sched => (
+        <ScheduleRow
+          schedule={sched}
+          edit={props.edit}
+          key={sched.day}
+          onScheduleChange={onScheduleChangeHandler}
         />
-      )}
-    </h3>
-    <h5
-      data-test="course-grade-header"
-      className="flex text-lg md:text-xl text-blue font-semibold"
-    >
-      Grade:{' '}
-      {props.course.grade && !props.edit ? (
-        <span data-test="course-grade" className="ml-2">
-          {props.course.grade}
-        </span>
-      ) : (
-        <input
-          data-test="grade-input"
-          className="ml-2 px-2 border-2"
-          type="number"
-          placeholder={props.course.grade}
-        />
-      )}
-    </h5>
-    {props.course.schedule.map(sched => (
-      <ScheduleRow schedule={sched} edit={props.edit} key={sched.day} />
-    ))}
-  </div>
-)
+      ))}
+    </div>
+  )
+}
 
 const ScheduleRow = props => {
   const [days] = useState(getDays())
@@ -159,10 +239,15 @@ const ScheduleRow = props => {
           min="09:00"
           max="21:00"
           value={startTime}
-          onChange={e => setStartTime(e.target.value)}
+          onChange={e => {
+            setStartTime(e.target.value)
+            props.onScheduleChange('start', e.target.value, props.schedule.day)
+          }}
         />
       ) : (
-        <p className="inline text-xl text-orange">{startTime}</p>
+        <p className="inline text-xl text-orange" data-test="schedule-time">
+          {startTime}
+        </p>
       )}
     </div>
   )
@@ -177,6 +262,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getCourseByName,
+  updateCourseDetails,
   deleteDetailedCourse,
 }
 

@@ -1,3 +1,12 @@
+/**
+ * uppercase over lowercase because of character round trip
+ * https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1308-normalize-strings-to-uppercase?view=vs-2015&redirectedfrom=MSDN
+ *
+ */
+export const compareStrings = (firstString, secondString) => {
+  return firstString.toUpperCase() === secondString.toUpperCase()
+}
+
 export const capitalize = name => {
   return name.charAt(0).toUpperCase() + name.substring(1, name.length)
 }
@@ -63,4 +72,18 @@ export const minutesTo24Hours = minutes => {
       : Math.floor(minutes / 60)
   const mins = minutes % 60 < 10 ? `0${minutes % 60}` : minutes % 60
   return `${hours}:${mins}`
+}
+
+/**
+ * Turns a 24H format into minutes from the start of the date. Reverse function of @see minutesTo24Hours
+ * @param {string} timeString
+ *
+ * @returns {int} the number of minutes from the start of the day
+ */
+export const hoursToMinutes = timeString => {
+  const hours = timeString.split(':')[0]
+
+  if (isNaN(hours)) return
+
+  return parseInt(hours) * 60
 }

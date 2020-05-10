@@ -22,10 +22,10 @@ describe('Courses page', () => {
 
     editCourseInfo()
 
+    stubSaveChanges()
     saveChanges()
 
-    // stubSaveChanges()
-    // makeSureChangesPersisted()
+    makeSureChangesPersisted()
   })
 })
 
@@ -69,38 +69,36 @@ const saveChanges = () => {
   cy.get('[data-test="edit-course-button"]').should('be.visible')
 }
 
-// const makeSureChangesPersisted = () => {
-//   goToCoursesPage()
-//   goToCourseDetailsPage(1, FIRST_COURSE_NAME, true)
+const makeSureChangesPersisted = () => {
+  goToCoursesPage()
+  goToCourseDetailsPage(1, FIRST_COURSE_NAME, true)
 
-//   cy.get('[data-test="course-professor"]').contains(PROFESSOR_NAME)
-//   cy.get('[data-test="course-grade"]').contains(COURSE_GRADE)
-//   cy.get('[data-test="schedule-time-input"]')
-//     .its('value')
-//     .should('be.equal', '14:00')
-// }
+  cy.get('[data-test="course-professor"]').contains(PROFESSOR_NAME)
+  cy.get('[data-test="course-grade"]').contains(COURSE_GRADE)
+  cy.get('[data-test="schedule-time"]').contains('14:00')
+}
 
-// const stubSaveChanges = () => {
-//   cy.server()
-//   cy.route({
-//     method: 'POST',
-//     url: '/graphql',
-//     response: {
-//       errors: null,
-//       data: {
-//         updateCourse: {
-//           name: FIRST_COURSE_NAME,
-//           schedule: [
-//             {
-//               day: 3,
-//               start: 840,
-//               // end: 660,
-//             },
-//           ],
-//           professor: PROFESSOR_NAME,
-//           grade: COURSE_GRADE,
-//         },
-//       },
-//     },
-//   })
-// }
+const stubSaveChanges = () => {
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/graphql',
+    response: {
+      errors: null,
+      data: {
+        updatedCourse: {
+          name: FIRST_COURSE_NAME,
+          schedule: [
+            {
+              day: 3,
+              start: 840,
+              // end: 660,
+            },
+          ],
+          professor: PROFESSOR_NAME,
+          grade: COURSE_GRADE,
+        },
+      },
+    },
+  })
+}

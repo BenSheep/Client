@@ -2,13 +2,18 @@ import {
   getCourses,
   getCourseByName,
   addCourse,
+  updateCourseDetails,
   deleteDetailedCourse,
   STORE_COURSES,
   STORE_COURSE_DETAILS,
   ADD_COURSE,
   REMOVE_COURSE_DETAILS,
 } from '~/store/actions/coursesActions'
+
+import { FIRST_COURSE_NAME } from '../../cypress/messages'
+
 import api from '~/store/api'
+
 jest.mock('../../store/api')
 
 describe('Courses actions', () => {
@@ -108,13 +113,43 @@ describe('Courses actions', () => {
         }
       )
     }),
-      it("deletes a course's details from the store", () => {
-        const expectedAction = {
-          type: REMOVE_COURSE_DETAILS,
-          course,
+      it("Updates a course's details", () => {
+        const updatedCourse = {
+          name: FIRST_COURSE_NAME,
+          professor: 'John Doe',
+          grade: 8,
+          scehdule: {
+            start: 840,
+          },
         }
 
-        expect(deleteDetailedCourse(course)).toEqual(expectedAction)
+        const dispatch = jest.fn()
+
+        api.post.mockResolvedValue({
+          data: {
+            errors: null,
+            data: {
+              updatedCourse,
+            },
+          },
+        })
+
+        return updateCourseDetails('token', updatedCourse)(dispatch).then(
+          () => {
+            expect(dispatch).toHaveBeenCalledWith({
+              type: STORE_COURSE_DETAILS,
+              course: updatedCourse,
+            })
+          }
+        )
       })
+    it("deletes a course's details from the store", () => {
+      const expectedAction = {
+        type: REMOVE_COURSE_DETAILS,
+        course,
+      }
+
+      expect(deleteDetailedCourse(course)).toEqual(expectedAction)
+    })
   })
 })

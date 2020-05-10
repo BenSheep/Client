@@ -97,6 +97,41 @@ export const addCourse = (token, courseName) => dispatch => {
   throw new Error('No token provided')
 }
 
+export const updateCourseDetails = (token, newCourse) => dispatch => {
+  if (token) {
+    if (newCourse) {
+      const query = `mutation{
+        updateCourse(${createUpdateCourseParams(newCourse)}){
+            name,
+            professor,
+            semester,
+            grade,
+            schedule{
+              day,
+              start,
+              end
+            }
+          }
+        }`
+
+      return api.post('', { query }, createHeaders(token)).then(res => {
+        if (!res.data.errors) {
+          const course = res.data.data.updatedCourse
+
+          dispatch({
+            type: STORE_COURSE_DETAILS,
+            course,
+          })
+        }
+      })
+    }
+
+    throw new Error('No course details provided')
+  }
+
+  throw new Error('No token provided')
+}
+
 export const deleteDetailedCourse = course => {
   if (course) {
     return {
@@ -117,4 +152,33 @@ const createHeaders = token => {
 
 const redirectToLogin = () => {
   Router.replace('/login')
+}
+
+const createUpdateCourseParams = course => {
+  const { name, schedule, semester, grade, professor } = course
+
+  if (!name) throw new Error('Course must have a name')
+
+  let params = `name: "${name}, "`
+
+  if (schedule) {
+    params += `schedule: ${schedule}, `
+  }
+
+  if (semester) {
+    params += `semester: ${semester}, `
+  }
+
+  if (grade) {
+    params += `grade: ${grade}, `
+  }
+
+  if (professor) {
+    params += `professor: ${professor}, `
+  }
+
+  // remove last comma
+  params = params.substring(0, params.length - 1)
+
+  return params
 }
