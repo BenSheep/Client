@@ -32,13 +32,19 @@ describe('Courses page', () => {
 const editCourseInfo = () => {
   editProfessorsName()
   editGrade()
-  editCourseTime()
+  editCourseSchedule()
+  cy.get('[data-test="schedule-day-dropdown"]').select('Friday')
 }
 
 const clickEditButton = () => {
   cy.get('[data-test="edit-course-button"]').click()
   cy.get('[data-test="edit-course-button"]').should('not.be.visible')
   cy.get('[data-test="save-button"').should('be.visible')
+
+  cy.get('[data-test="schedule-day-dropdown"]').should(
+    'have.value',
+    'Thurshday'
+  )
 }
 
 const editProfessorsName = () => {
@@ -57,10 +63,15 @@ const editGrade = () => {
     .type(COURSE_GRADE)
 }
 
-const editCourseTime = () => {
-  cy.get('[data-test="schedule-time-input"]')
+const editCourseSchedule = () => {
+  cy.get('[data-test="schedule-day-dropdown"]').select('Friday')
+  cy.get('[data-test="schedule-start-time-input"]')
     .clear()
     .type('14:00')
+
+  cy.get('[data-test="schedule-end-time-input"]')
+    .clear()
+    .type('16:00')
 }
 
 const saveChanges = () => {
@@ -75,7 +86,9 @@ const makeSureChangesPersisted = () => {
 
   cy.get('[data-test="course-professor"]').contains(PROFESSOR_NAME)
   cy.get('[data-test="course-grade"]').contains(COURSE_GRADE)
-  cy.get('[data-test="schedule-time"]').contains('14:00')
+  cy.get('[data-test="schedule-day"]').contains('Friday')
+  cy.get('[data-test="schedule-start-time"]').contains('14:00')
+  cy.get('[data-test="schedule-end-time"]').contains('16:00')
 }
 
 const stubSaveChanges = () => {
@@ -90,9 +103,9 @@ const stubSaveChanges = () => {
           name: FIRST_COURSE_NAME,
           schedule: [
             {
-              day: 3,
+              day: 4,
               start: 840,
-              // end: 660,
+              end: 960,
             },
           ],
           professor: PROFESSOR_NAME,

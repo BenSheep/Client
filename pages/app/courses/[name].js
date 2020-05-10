@@ -63,10 +63,7 @@ class CourseDetailsPage extends Component {
   }
 
   onChangeHandler = newVal => {
-    const { courseDetails } = this.props.courses
-
-    const key = Object.keys(newVal)[0]
-    const val = Object.values(newVal)[0]
+    const { courseDetails, key, val } = this.prepareUpdateValues(newVal)
 
     this.setState(state => ({
       course: {
@@ -78,10 +75,7 @@ class CourseDetailsPage extends Component {
   }
 
   onScheduleChangeHandler = (newVal, day) => {
-    const { courseDetails } = this.props.courses
-
-    const key = Object.keys(newVal)[0]
-    const val = Object.values(newVal)[0]
+    const { courseDetails, key, val } = this.prepareUpdateValues(newVal)
 
     const index = this.state.course.schedule.findIndex(
       sched => sched.day === day
@@ -100,6 +94,15 @@ class CourseDetailsPage extends Component {
         schedule: newSchedule,
       },
     }))
+  }
+
+  prepareUpdateValues = newVal => {
+    const { courseDetails } = this.props.courses
+
+    const key = Object.keys(newVal)[0]
+    const val = Object.values(newVal)[0]
+
+    return { courseDetails, key, val }
   }
 
   render() {
@@ -227,27 +230,72 @@ const ScheduleRow = props => {
     minutesTo24Hours(props.schedule.start)
   )
 
+  const [endTime, setEndTime] = useState(minutesTo24Hours(props.schedule.end))
+
   return (
     <div className="mt-2">
-      <h5 className="inline mr-4 text-xl text-blue">
-        {days[props.schedule.day]} -
-      </h5>
       {props.edit ? (
-        <input
-          data-test="schedule-time-input"
-          type="time"
-          min="09:00"
-          max="21:00"
-          value={startTime}
-          onChange={e => {
-            setStartTime(e.target.value)
-            props.onScheduleChange('start', e.target.value, props.schedule.day)
-          }}
-        />
+        <div className="inline">
+          <select
+            data-test="schedule-day-dropdown"
+            className="mr-4 text-xl text-blue"
+            defaultValue={days[props.schedule.day]}
+          >
+            {days.map(day => (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            ))}
+          </select>
+          <input
+            className="mr-2"
+            data-test="schedule-start-time-input"
+            type="time"
+            min="09:00"
+            max="21:00"
+            value={startTime}
+            onChange={e => {
+              setStartTime(e.target.value)
+              props.onScheduleChange(
+                'start',
+                e.target.value,
+                props.schedule.day
+              )
+            }}
+          />
+          <input
+            data-test="schedule-end-time-input"
+            type="time"
+            min={startTime}
+            max="21:00"
+            value={endTime}
+            onChange={e => {
+              setEndTime(e.target.value)
+              props.onScheduleChange('end', e.target.value, props.schedule.day)
+            }}
+          />
+        </div>
       ) : (
-        <p className="inline text-xl text-orange" data-test="schedule-time">
-          {startTime}
-        </p>
+        <div className="inline">
+          <h5
+            data-test="schedule-day"
+            className="inline mr-4 text-xl text-blue"
+          >
+            {days[props.schedule.day]} -
+          </h5>
+          <p
+            className="inline mr-4 text-xl text-orange"
+            data-test="schedule-start-time"
+          >
+            {startTime}
+          </p>
+          <p
+            className="inline text-xl text-orange"
+            data-test="schedule-end-time"
+          >
+            {endTime}
+          </p>
+        </div>
       )}
     </div>
   )
