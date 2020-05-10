@@ -36,7 +36,7 @@ class CoursesPage extends React.Component {
         <div className="flex-col md:flex-row w-11/12 mx-auto my-8">
           <div className="flex flex-wrap">
             <h1
-              className="flex flex-col w-full md:w-8/12 xl:w-9/12 text-2xl md:text-4xl text-blue tracking-wide"
+              className="flex flex-col w-full md:w-8/12 xl:w-9/12 text-2xl md:text-4xl text-orange tracking-wide"
               data-test="courses-header"
             >
               My Courses

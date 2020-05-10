@@ -155,12 +155,14 @@ class CourseDetailsPage extends Component {
                 />
               </div>
             ) : (
-              <img
-                className="cursor-pointer"
-                src="/icons/check.png"
-                data-test="save-button"
-                onClick={() => this.onSaveHandler()}
-              />
+              <div className="flex w-full md:w-2/12 float-right justify-center align-middle">
+                <img
+                  className="inline object-contain cursor-pointer"
+                  src="/icons/check.png"
+                  data-test="save-button"
+                  onClick={() => this.onSaveHandler()}
+                />
+              </div>
             )}
             <AdditionalCourseInfo
               course={courseDetails}
@@ -197,47 +199,56 @@ const AdditionalCourseInfo = props => {
   }
 
   return (
-    <div>
-      <h3
-        className="w-full text-md md:text-lg mb-2"
-        data-test="course-professor-header"
-      >
-        Professor:{' '}
-        {props.course.professor && !props.edit ? (
-          <span data-test="course-professor" className="ml-2">
-            {props.course.professor}
-          </span>
-        ) : (
-          <input
-            data-test="professor-name-input"
-            className="ml-2 px-2 border-2"
-            type="text"
-            placeholder={props.course.professor}
-            onChange={e => onChangeHandler(e, 'professor')}
-          />
-        )}
-      </h3>
-      <h5
-        data-test="course-grade-header"
-        className="flex text-lg md:text-xl text-blue font-semibold"
-      >
-        Grade:{' '}
-        {props.course.grade && !props.edit ? (
-          <span data-test="course-grade" className="ml-2">
-            {props.course.grade}
-          </span>
-        ) : (
-          <input
-            data-test="grade-input"
-            className="ml-2 px-2 border-2"
-            type="number"
-            placeholder={props.course.grade}
-            onChange={e => onChangeHandler(e, 'grade')}
-          />
-        )}
-      </h5>
+    <div className="flex flex-row md:flex-col w-full mt-4">
+      <div className="flex flex-row my-2">
+        <div className="flex flex-col w-1/6">
+          <h3
+            className=" w-full text-md text-lg md:text-xl mb-2"
+            data-test="course-professor-header"
+          >
+            Professor:{' '}
+          </h3>
+        </div>
+        <div className="flex flex-col">
+          {props.course.professor || !props.edit ? (
+            <span data-test="course-professor">{props.course.professor}</span>
+          ) : (
+            <input
+              data-test="professor-name-input"
+              className="px-2 rounded shadow-inner h-10"
+              type="text"
+              placeholder={props.course.professor}
+              onChange={e => onChangeHandler(e, 'professor')}
+            />
+          )}
+        </div>
+      </div>
+      <div className="flex flex-row my-2">
+        <div className="flex flex-col w-1/6">
+          <h3
+            data-test="course-grade-header"
+            className="flex text-lg md:text-xl text-blue"
+          >
+            Grade:{' '}
+          </h3>
+        </div>
+        <div className="flex flex-col">
+          {props.course.grade || !props.edit ? (
+            <span data-test="course-grade">{props.course.grade}</span>
+          ) : (
+            <input
+              data-test="grade-input"
+              className="px-2 rounded shadow-inner h-10"
+              type="number"
+              placeholder={props.course.grade}
+              onChange={e => onChangeHandler(e, 'grade')}
+            />
+          )}
+        </div>
+      </div>
       {props.course.schedule.map(sched => (
         <ScheduleRow
+          className="my-2"
           schedule={sched}
           edit={props.edit}
           key={sched.day}
@@ -257,68 +268,81 @@ const ScheduleRow = props => {
   const [endTime, setEndTime] = useState(minutesTo24Hours(props.schedule.end))
 
   return (
-    <div className="mt-2">
+    <div className="flex flex-row mt-2">
       {props.edit ? (
-        <div className="inline">
-          <select
-            data-test="schedule-day-dropdown"
-            className="mr-4 text-xl text-blue"
-            defaultValue={days[props.schedule.day]}
-          >
-            {days.map(day => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
-          <input
-            className="mr-2"
-            data-test="schedule-start-time-input"
-            type="time"
-            min="09:00"
-            max="21:00"
-            value={startTime}
-            onChange={e => {
-              setStartTime(e.target.value)
-              props.onScheduleChange(
-                'start',
-                e.target.value,
-                props.schedule.day
-              )
-            }}
-          />
-          <input
-            data-test="schedule-end-time-input"
-            type="time"
-            min={startTime}
-            max="21:00"
-            value={endTime}
-            onChange={e => {
-              setEndTime(e.target.value)
-              props.onScheduleChange('end', e.target.value, props.schedule.day)
-            }}
-          />
+        <div className="flex flex-row w-full">
+          <div className="flex flex-col w-1/6">
+            <select
+              data-test="schedule-day-dropdown"
+              className="mr-4 text-xl text-blue bg-white h-10"
+              defaultValue={days[props.schedule.day]}
+            >
+              {days.map(day => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <input
+              className="mr-4 h-10"
+              data-test="schedule-start-time-input"
+              type="time"
+              min="09:00"
+              max="21:00"
+              value={startTime}
+              onChange={e => {
+                setStartTime(e.target.value)
+                props.onScheduleChange(
+                  'start',
+                  e.target.value,
+                  props.schedule.day
+                )
+              }}
+            />
+            <input
+              className="h-10"
+              data-test="schedule-end-time-input"
+              type="time"
+              min={startTime}
+              max="21:00"
+              value={endTime}
+              onChange={e => {
+                setEndTime(e.target.value)
+                props.onScheduleChange(
+                  'end',
+                  e.target.value,
+                  props.schedule.day
+                )
+              }}
+            />
+          </div>
         </div>
       ) : (
-        <div className="inline">
-          <h5
-            data-test="schedule-day"
-            className="inline mr-4 text-xl text-blue"
-          >
-            {days[props.schedule.day]} -
-          </h5>
-          <p
-            className="inline mr-4 text-xl text-orange"
-            data-test="schedule-start-time"
-          >
-            {startTime}
-          </p>
-          <p
-            className="inline text-xl text-orange"
-            data-test="schedule-end-time"
-          >
-            {endTime}
-          </p>
+        <div className="flex flex-row w-full">
+          <div className="flex flex-col w-1/6">
+            <h5
+              data-test="schedule-day"
+              className="inline mr-4 text-xl text-blue"
+            >
+              {days[props.schedule.day]}:
+            </h5>
+          </div>
+          <div className="flex flex-row w-1/6">
+            <p
+              className="inline mr-4 text-xl text-orange"
+              data-test="schedule-start-time"
+            >
+              {startTime}
+            </p>
+            <p
+              className="inline text-xl text-orange"
+              data-test="schedule-end-time"
+            >
+              {endTime}
+            </p>
+          </div>
         </div>
       )}
     </div>
